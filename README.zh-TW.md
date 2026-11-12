@@ -38,12 +38,14 @@ Skill 只開啟你指定、附加或貼上的來源；經授權的事實檢查�
 
 | 路徑 | 用途 |
 | --- | --- |
+| `.claude-plugin/plugin.json` | Plugin 設定檔：名稱、版本、說明與連結 |
 | `skills/linkedin-positioning-panel/SKILL.md` | 核心 Skill 指令 |
 | `skills/linkedin-positioning-panel/LICENSE` | 隨 Skill 資料夾保留的授權條款副本 |
 | `README.md` | 英文使用說明、測試狀態與致謝 |
 | `README.zh-TW.md` | 繁體中文使用說明 |
 | `LICENSE` | MIT 條款及保留的原始版權聲明 |
 | `CHANGELOG.md` | 版本更新紀錄 |
+| `examples/` | 供試用的虛構範例個人檔案 |
 
 ## 不安裝 Skill 的快速測試方式
 
@@ -75,6 +77,31 @@ Skill 只開啟你指定、附加或貼上的來源；經授權的事實檢查�
 ```
 
 執行 Target Role Audit 時，另提供目標職缺描述。使用者須具備目前有效的 Claude Code 存取方式，以及能執行相關操作的模型；模型與服務費用不包含在本專案授權內。最新載入方式請參閱 [Claude Code 官方 Skill 文件](https://code.claude.com/docs/en/skills)。
+
+## 以 Plugin 方式載入
+
+專案根目錄同時也是一個 Claude plugin：設定檔是 `.claude-plugin/plugin.json`，Skill 放在 `skills/`。如果想在 Claude Code 中直接試用、不複製檔案，可以 clone 本專案，然後用以下指令開啟工作階段：
+
+```text
+claude --plugin-dir ./linkedin-positioning-panel
+```
+
+以 plugin 方式載入時，Skill 的完整名稱是 `linkedin-positioning-panel:linkedin-positioning-panel`。在 Claude Code 2.1.322 的確認中，簡短指令 `/linkedin-positioning-panel` 也能載入。若另外安裝了同名 Skill，請使用完整名稱。
+
+本專案尚未在 Anthropic 的 plugin 目錄上架。上架前，請使用上方的複製安裝方式或 `--plugin-dir`。
+
+## 範例提示
+
+以下提示使用 `examples/` 中的虛構個人檔案。實際使用時，請把路徑換成你自己的 Profile PDF 或貼上的文字。
+
+1. 整體審查，採預設交付方式：
+   `/linkedin-positioning-panel 請對 examples/sample-profile-zh.md 執行 General Audit。`
+2. 目標職務審查，只在對話中呈現：
+   `/linkedin-positioning-panel 請依照這份職缺描述，對 examples/sample-profile-zh.md 執行 Target Role Audit：〔貼上職缺描述〕。結果只在對話呈現，不要寫檔。`
+3. 英文檔案，授權事實檢查代理並指定輸出位置：
+   `/linkedin-positioning-panel Perform a General Audit of examples/sample-profile-en.md. Save the reports to ~/private/linkedin-review/. I authorize one separate factual verifier agent.`
+
+範例檔案刻意包含團隊獎項、過去的參與，以及未說明期間的數字。審查時應保留原本的寫法，不應改成個人得獎、目前職務，也不應自行假設期間。
 
 ## 輸出
 

@@ -38,12 +38,14 @@ Having agent tools available does not count as authorization. Authorizing a veri
 
 | Path | Purpose |
 | --- | --- |
+| `.claude-plugin/plugin.json` | Plugin manifest: name, version, description, and links |
 | `skills/linkedin-positioning-panel/SKILL.md` | Canonical skill instructions |
 | `skills/linkedin-positioning-panel/LICENSE` | License copy kept with the skill folder |
 | `README.md` | Use, test status, and attribution |
 | `README.zh-TW.md` | Traditional Chinese documentation |
 | `LICENSE` | MIT terms and retained original copyright |
 | `CHANGELOG.md` | Release history |
+| `examples/` | Fictional sample profiles for trying the skill |
 
 ## Quick start without installing a skill
 
@@ -75,6 +77,31 @@ A short instruction like this produces a simulated panel, a labeled self-check, 
 ```
 
 For a Target Role Audit, also provide a target job description. A current Claude Code account/access method and a model capable of the requested operations are required; model/service costs are separate from this project's license. Check the [official Claude Code skills documentation](https://code.claude.com/docs/en/skills) for current loading behavior.
+
+## Load as a plugin
+
+The repository root is also a Claude plugin. Its manifest is `.claude-plugin/plugin.json`, and its skill is in `skills/`. To try it in Claude Code without copying files, clone the repository and start a session with it loaded:
+
+```text
+claude --plugin-dir ./linkedin-positioning-panel
+```
+
+Loaded as a plugin, the skill's full name is `linkedin-positioning-panel:linkedin-positioning-panel`. In a Claude Code 2.1.322 check, the short command `/linkedin-positioning-panel` also loaded it. If another skill with the same name is installed, use the full name.
+
+A listing in Anthropic's plugin directory has not been published. Until one is, use the copy-based installation above or `--plugin-dir`.
+
+## Example prompts
+
+These prompts use the fictional profiles in `examples/`. Replace the path with your own Profile PDF export or pasted text.
+
+1. General Audit with default delivery:
+   `/linkedin-positioning-panel Perform a General Audit of examples/sample-profile-en.md.`
+2. Target Role Audit, with the reports kept in chat:
+   `/linkedin-positioning-panel Perform a Target Role Audit of examples/sample-profile-en.md against this job description: [paste the job description]. Show the reports only in chat; don't write files.`
+3. Chinese analysis with an authorized verifier and a chosen output folder:
+   `/linkedin-positioning-panel 請對 examples/sample-profile-zh.md 執行 General Audit，報告存到 ~/private/linkedin-review/。我授權使用一個獨立事實檢查代理。`
+
+The sample profiles deliberately contain a team award, past participation, and figures without a stated period. A careful review keeps that wording as supplied rather than turning it into an individual award, a current role, or an assumed period.
 
 ## Output
 

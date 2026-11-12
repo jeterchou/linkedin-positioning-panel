@@ -1,0 +1,20 @@
+{
+  "name": "linkedin-positioning-panel",
+  "displayName": "LinkedIn Positioning Panel",
+  "version": "0.1.2",
+  "description": "Review a LinkedIn profile you supply (PDF export, pasted text, or screenshots) through seven reviewer perspectives, with source coverage checks, an evidence ledger, and fact-preserving rewrites of the headline, About, and Experience sections. Not affiliated with or endorsed by LinkedIn.",
+  "author": {
+    "name": "Jeter Chou",
+    "url": "https://github.com/jeterchou"
+  },
+  "homepage": "https://github.com/jeterchou/linkedin-positioning-panel",
+  "repository": "https://github.com/jeterchou/linkedin-positioning-panel",
+  "license": "MIT",
+  "keywords": [
+    "linkedin",
+    "career",
+    "profile-review",
+    "positioning",
+    "resume"
+  ]
+}

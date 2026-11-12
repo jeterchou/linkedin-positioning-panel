@@ -1,5 +1,25 @@
 # Changelog
 
+## Unreleased — Plugin packaging
+
+Packaging for a possible listing in Anthropic's plugin directory. No listing has been submitted or published.
+
+### Added
+
+- `.claude-plugin/plugin.json` manifest (name `linkedin-positioning-panel`, version `0.1.2`, MIT license, homepage and repository links). The description states that the plugin is not affiliated with or endorsed by LinkedIn.
+- `examples/` with two fictional sample profiles, in English and Traditional Chinese.
+- README sections (English and Traditional Chinese) on loading the repository as a plugin and on three example prompts.
+
+### Unchanged
+
+- `skills/linkedin-positioning-panel/SKILL.md` is byte-identical to v0.1.2 (SHA-256 `59efb0a511e4a31df450b97cc537acfab997f378ba8aae51b05b99b981e3dcf2`).
+
+### Checks
+
+- `claude plugin validate --profile directory .` passes (Claude Code 2.1.322). With `--strict`, it fails only on the missing listing icon warning.
+- Loading the repository with `--plugin-dir` in an isolated configuration listed the skill as `linkedin-positioning-panel:linkedin-positioning-panel`, at plugin version 0.1.2. The short command `/linkedin-positioning-panel` also loaded it.
+- The directory's own validation, security scan, and policy review have not been run. Behavior in claude.ai chat and Cowork remains untested.
+
 ## v0.1.2 — Prepared 2026-11-12
 
 Early testing release prepared for publication; the GitHub tag and release are created separately by the maintainer.
