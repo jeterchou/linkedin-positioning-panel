@@ -2,7 +2,7 @@
 
 [English](README.md) | 繁體中文
 
-**v0.1.2 · 早期測試版**
+**v0.1.3 · Plugin 包裝版，尚未發布。** Skill 指令與 v0.1.2 早期測試版完全相同。
 
 運用人工智慧協助審查 LinkedIn 個人檔案的 Skill，著重專業定位、有依據的文字修訂，以及個人、團隊與合作成果的清楚歸屬。適用於不同產業與職涯階段。
 
@@ -80,19 +80,31 @@ Skill 只開啟你指定、附加或貼上的來源；經授權的事實檢查�
 
 ## 以 Plugin 方式載入
 
-專案根目錄同時也是一個 Claude plugin：設定檔是 `.claude-plugin/plugin.json`，Skill 放在 `skills/`。如果想在 Claude Code 中直接試用、不複製檔案，可以 clone 本專案，然後用以下指令開啟工作階段：
+專案根目錄同時也是一個 Claude plugin：設定檔是 `.claude-plugin/plugin.json`，Skill 放在 `skills/`。本專案尚未在 Anthropic 的 plugin 目錄上架；上架前，請使用上方的複製安裝方式，或依本節方式載入。
+
+### Claude Code
+
+clone 本專案後，**在專案資料夾內**啟動 Claude Code，下方範例中的 `examples/` 路徑才會正確：
 
 ```text
-claude --plugin-dir ./linkedin-positioning-panel
+git clone https://github.com/jeterchou/linkedin-positioning-panel
+cd linkedin-positioning-panel
+claude --plugin-dir .
 ```
 
 以 plugin 方式載入時，Skill 的完整名稱是 `linkedin-positioning-panel:linkedin-positioning-panel`。在 Claude Code 2.1.322 的確認中，簡短指令 `/linkedin-positioning-panel` 也能載入。若另外安裝了同名 Skill，請使用完整名稱。
 
-本專案尚未在 Anthropic 的 plugin 目錄上架。上架前，請使用上方的複製安裝方式或 `--plugin-dir`。
+專案資料夾本身是 git 儲存庫。若沒有指定輸出位置，Skill 不會把報告寫進這個資料夾；請見「輸出」一節。
+
+### claude.ai 對話與 Cowork
+
+Plugin 中的 Skill 也會在 claude.ai 對話與 Cowork 中載入。上架前，需要用 plugin 檔案自行加入帳號。在這兩個環境中的行為（包括檔案交付）**尚未測試**。
 
 ## 範例提示
 
-以下提示使用 `examples/` 中的虛構個人檔案。實際使用時，請把路徑換成你自己的 Profile PDF 或貼上的文字。
+範例使用 `examples/` 中的虛構個人檔案。實際使用時，請換成你自己的 Profile PDF 或貼上的文字。
+
+### 在 Claude Code 中（從專案資料夾啟動）
 
 1. 整體審查，採預設交付方式：
    `/linkedin-positioning-panel 請對 examples/sample-profile-zh.md 執行 General Audit。`
@@ -100,6 +112,12 @@ claude --plugin-dir ./linkedin-positioning-panel
    `/linkedin-positioning-panel 請依照這份職缺描述，對 examples/sample-profile-zh.md 執行 Target Role Audit：〔貼上職缺描述〕。結果只在對話呈現，不要寫檔。`
 3. 英文檔案，授權事實檢查代理並指定輸出位置：
    `/linkedin-positioning-panel Perform a General Audit of examples/sample-profile-en.md. Save the reports to ~/private/linkedin-review/. I authorize one separate factual verifier agent.`
+
+### 在 claude.ai 對話或 Cowork 中（尚未測試）
+
+這兩個環境沒有專案路徑可以指定。請從 GitHub 上的 `examples/` 下載範例檔，附加到對話中（或貼上文字），再用文字提出需求，例如：
+
+`請使用 LinkedIn Positioning Panel Skill，對附加的個人檔案執行 General Audit。只使用附加的檔案。`
 
 範例檔案刻意包含團隊獎項、過去的參與，以及未說明期間的數字。審查時應保留原本的寫法，不應改成個人得獎、目前職務，也不應自行假設期間。
 
@@ -123,6 +141,18 @@ claude --plugin-dir ./linkedin-positioning-panel
 - Skill 一律不 stage、commit 或 push 報告。
 
 不要將私人輸入資料或產出的個人報告提交到本公開專案。
+
+## 資料處理
+
+本 plugin 只包含指令：一個 Skill，沒有 hooks、腳本、MCP 伺服器或其他程式碼。作者沒有營運任何後端，plugin 本身也不會傳送任何資料給作者。
+
+| 處理環節 | 說明 |
+| --- | --- |
+| Claude 處理 | 你提供的個人檔案及其他內容，會作為對話的一部分傳給 Claude，依你 Claude 帳號的條款與資料設定處理。如果你授權使用代理，代理會在同一工作階段中取得授權範圍內的來源與草稿。 |
+| 報告寫檔 | 預設會把三份 Markdown 報告寫到「輸出」一節所述的位置。報告包含你的個人檔案內容與分析，會保留到你自行刪除為止。只在對話呈現時不寫報告檔。執行過程中，主機也可能在工作或暫存位置建立暫存檔，例如用來檢查 PDF 版面的頁面圖片。 |
+| 外部工具查詢 | 當你要求只使用提供的來源時，Skill 不會上網。否則，在你要求查證，或 Skill 判斷可取得的權威來源會實質影響審查時，它可能查核外部資訊。查詢只透過主機提供的網路搜尋或讀取工具進行，並會把雇主、獎項、證照名稱等搜尋字詞送到這些服務。若要避免查詢，請說明「只使用提供的來源，不要上網」。沒有這項指示時是否會主動查詢，**尚未測試**。 |
+| LinkedIn 網址 | 網址只作輔助來源。Skill 不要求密碼、Cookie 或工作階段權杖，也不繞過存取限制。若開啟網址，使用的是主機提供的工具。 |
+| 自有後端 | 沒有。 |
 
 ## 證據與審查原則
 

@@ -2,7 +2,7 @@
 
 English | [繁體中文](README.zh-TW.md)
 
-**v0.1.2 · Early testing release**
+**v0.1.3 · Plugin packaging; not yet released.** The skill instructions are identical to the v0.1.2 early testing release.
 
 An AI-assisted LinkedIn profile review skill for professional positioning, evidence-based revisions, and clear attribution of individual, team, and collaborative work. Designed for people across industries, not a single profession or career stage.
 
@@ -80,19 +80,31 @@ For a Target Role Audit, also provide a target job description. A current Claude
 
 ## Load as a plugin
 
-The repository root is also a Claude plugin. Its manifest is `.claude-plugin/plugin.json`, and its skill is in `skills/`. To try it in Claude Code without copying files, clone the repository and start a session with it loaded:
+The repository root is also a Claude plugin. Its manifest is `.claude-plugin/plugin.json`, and its skill is in `skills/`. A listing in Anthropic's plugin directory has not been published; until one is, use the copy-based installation above or load the repository as described here.
+
+### Claude Code
+
+Clone the repository, then start Claude Code **from inside the repository folder**, so that the `examples/` paths below resolve:
 
 ```text
-claude --plugin-dir ./linkedin-positioning-panel
+git clone https://github.com/jeterchou/linkedin-positioning-panel
+cd linkedin-positioning-panel
+claude --plugin-dir .
 ```
 
 Loaded as a plugin, the skill's full name is `linkedin-positioning-panel:linkedin-positioning-panel`. In a Claude Code 2.1.322 check, the short command `/linkedin-positioning-panel` also loaded it. If another skill with the same name is installed, use the full name.
 
-A listing in Anthropic's plugin directory has not been published. Until one is, use the copy-based installation above or `--plugin-dir`.
+The repository folder is a git repository. If you name no output location, the skill does not write reports inside it; see Output.
+
+### claude.ai chat and Cowork
+
+Skills in a plugin also load in claude.ai chat and Cowork. Until a directory listing exists, the plugin must be added to your account from its files. Behavior on these surfaces, including file delivery, has **not been tested**.
 
 ## Example prompts
 
-These prompts use the fictional profiles in `examples/`. Replace the path with your own Profile PDF export or pasted text.
+The examples use the fictional profiles in `examples/`. Replace them with your own Profile PDF export or pasted text.
+
+### In Claude Code (started from the repository folder)
 
 1. General Audit with default delivery:
    `/linkedin-positioning-panel Perform a General Audit of examples/sample-profile-en.md.`
@@ -100,6 +112,12 @@ These prompts use the fictional profiles in `examples/`. Replace the path with y
    `/linkedin-positioning-panel Perform a Target Role Audit of examples/sample-profile-en.md against this job description: [paste the job description]. Show the reports only in chat; don't write files.`
 3. Chinese analysis with an authorized verifier and a chosen output folder:
    `/linkedin-positioning-panel 請對 examples/sample-profile-zh.md 執行 General Audit，報告存到 ~/private/linkedin-review/。我授權使用一個獨立事實檢查代理。`
+
+### In claude.ai chat or Cowork (untested)
+
+There is no repository path to point to. Download a sample file from `examples/` on GitHub, attach it to the conversation (or paste its text), and ask in words, for example:
+
+`Use the LinkedIn Positioning Panel skill to perform a General Audit of the attached profile. Use only the attached file.`
 
 The sample profiles deliberately contain a team award, past participation, and figures without a stated period. A careful review keeps that wording as supplied rather than turning it into an individual award, a current role, or an assumed period.
 
@@ -123,6 +141,18 @@ The sample profiles deliberately contain a team award, past participation, and f
 - The skill never stages, commits, or pushes reports.
 
 Do not commit private inputs or generated personal reports to this public project.
+
+## Data handling
+
+This plugin contains instructions only: one skill, with no hooks, scripts, MCP servers, or other code. It has no backend operated by the author, and the plugin itself sends nothing to the author.
+
+| What happens | Details |
+| --- | --- |
+| Claude processing | The profile content and anything else you supply are sent to Claude as part of your conversation and processed under your Claude account's terms and data settings. If you authorize agents, they receive the in-scope sources and drafts within the same session. |
+| Report files | By default, three Markdown reports containing your profile content and the analysis are written to the location described in Output, and they stay there until you delete them. Chat-only delivery writes no report files. While working, the host may also create temporary files, such as page images used to check a PDF's layout, in its working or scratch locations. |
+| External lookups | When you ask it to use only the supplied sources, the skill does not browse. Otherwise it may check external claims when you ask for verification, or when it judges that accessible authoritative sources materially affect the audit. Such lookups use only the web or fetch tools your host provides, and they send search terms, such as employer, award, or credential names, to those services. To prevent lookups, say "use only the supplied sources; do not browse." Whether lookups happen without such an instruction has **not been tested**. |
+| LinkedIn URLs | URLs are supplementary sources only. The skill does not ask for passwords, cookies, or session tokens, and it does not bypass access controls. Opening a URL, if it happens, uses your host's tools. |
+| Author backend | None. |
 
 ## Evidence and review rules
 
