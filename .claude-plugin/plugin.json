@@ -10,6 +10,7 @@
   "homepage": "https://github.com/jeterchou/linkedin-positioning-panel",
   "repository": "https://github.com/jeterchou/linkedin-positioning-panel",
   "license": "MIT",
+  "icon": "./.claude-plugin/icon.png",
   "keywords": [
     "linkedin",
     "career",

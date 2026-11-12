@@ -2,12 +2,16 @@
 
 ## v0.1.3 — Plugin packaging, unreleased
 
-Packaging for a possible listing in Anthropic's plugin directory. No listing has been submitted or published, and no tag or GitHub release has been created.
+Packaging for a possible listing in Anthropic's plugin directory. The two steps are tracked separately:
+
+- **GitHub release v0.1.3:** not published; no tag created.
+- **Anthropic plugin directory listing:** not submitted.
 
 ### Added
 
 - `.claude-plugin/plugin.json` manifest: name `linkedin-positioning-panel`, version `0.1.3`, MIT license, and homepage and repository links. The description states that the plugin is not affiliated with or endorsed by LinkedIn.
 - `examples/` with two fictional sample profiles, in English and Traditional Chinese.
+- `.claude-plugin/icon.png`, a proposed 1024 × 1024 PNG listing icon with no third-party marks, referenced by `icon` in `plugin.json`.
 - README sections (English and Traditional Chinese):
   - loading the repository as a plugin, started from inside the repository folder so that `examples/` paths resolve;
   - example prompts, listed separately for Claude Code and for claude.ai chat or Cowork (the latter untested);
@@ -19,12 +23,12 @@ Packaging for a possible listing in Anthropic's plugin directory. No listing has
 
 ### Not decided
 
-- Listing icon: none added. The official plugin manifest reference documents an `icon` field that takes the path of an image file inside the plugin. Size limits (512 to 2048 px, under 2 MB, no SVG or WebP) and the rule that an icon is taken only the first time the plugin is saved or submitted appear in the `claude plugin validate` output of Claude Code 2.1.322. They were not found in the official web documentation and are unconfirmed.
+- Listing icon: a proposed icon is included. The official plugin manifest reference documents an `icon` field that takes the path of an image file inside the plugin. Size limits (512 to 2048 px, under 2 MB, no SVG or WebP) and the rule that an icon is taken only the first time the plugin is saved or submitted appear only in the `claude plugin validate` output of Claude Code 2.1.322; they are unconfirmed. Confirm the icon before the plugin is first saved in the developer portal.
 - Privacy policy link: the plugin manifest supports `privacyPolicyUrl`. Whether the directory requires one for an instructions-only plugin is unconfirmed.
 
 ### Checks (Claude Code 2.1.322, Linux, one run)
 
-- `claude plugin validate --profile directory .` passes. With `--strict`, the only failure is the missing-icon warning.
+- `claude plugin validate --profile directory .` passes. Before the icon was added, `--strict` failed only on the missing-icon warning; with the icon, `--strict` also passes.
 - README example 1 was run from a fresh clone, started inside the repository folder with `--plugin-dir .`. The run used an isolated configuration with skill sync off, so this plugin's skill was the only one of its name.
   - The skill loaded as `linkedin-positioning-panel:linkedin-positioning-panel`, at plugin version 0.1.3.
   - Only the named sample file was opened. No agents were launched, and no web tool was attempted (web tools were not allowed).

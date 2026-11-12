@@ -4,6 +4,11 @@
 
 **v0.1.3 · Plugin 包裝版，尚未發布。** Skill 指令與 v0.1.2 早期測試版完全相同。
 
+| 步驟 | 狀態 |
+| --- | --- |
+| GitHub 發布 v0.1.3 | 尚未發布（最新已發布版本為 v0.1.2） |
+| Anthropic plugin 目錄上架 | 尚未送審 |
+
 運用人工智慧協助審查 LinkedIn 個人檔案的 Skill，著重專業定位、有依據的文字修訂，以及個人、團隊與合作成果的清楚歸屬。適用於不同產業與職涯階段。
 
 這是一套以指令運作的 Skill，並非獨立應用程式、LinkedIn 整合服務或真人招募團隊，不預測錄取結果或 LinkedIn 搜尋排名。
@@ -38,7 +43,8 @@ Skill 只開啟你指定、附加或貼上的來源；經授權的事實檢查�
 
 | 路徑 | 用途 |
 | --- | --- |
-| `.claude-plugin/plugin.json` | Plugin 設定檔：名稱、版本、說明與連結 |
+| `.claude-plugin/plugin.json` | Plugin 設定檔：名稱、版本、說明、圖示與連結 |
+| `.claude-plugin/icon.png` | 預定的目錄圖示（1024 × 1024 PNG） |
 | `skills/linkedin-positioning-panel/SKILL.md` | 核心 Skill 指令 |
 | `skills/linkedin-positioning-panel/LICENSE` | 隨 Skill 資料夾保留的授權條款副本 |
 | `README.md` | 英文使用說明、測試狀態與致謝 |

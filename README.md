@@ -4,6 +4,11 @@ English | [繁體中文](README.zh-TW.md)
 
 **v0.1.3 · Plugin packaging; not yet released.** The skill instructions are identical to the v0.1.2 early testing release.
 
+| Step | Status |
+| --- | --- |
+| GitHub release v0.1.3 | Not published (v0.1.2 is the latest published release) |
+| Anthropic plugin directory listing | Not submitted |
+
 An AI-assisted LinkedIn profile review skill for professional positioning, evidence-based revisions, and clear attribution of individual, team, and collaborative work. Designed for people across industries, not a single profession or career stage.
 
 This is an instruction-based skill, not a standalone app, LinkedIn integration, or actual recruiter panel. It does not predict hiring outcomes or LinkedIn search rankings.
@@ -38,7 +43,8 @@ Having agent tools available does not count as authorization. Authorizing a veri
 
 | Path | Purpose |
 | --- | --- |
-| `.claude-plugin/plugin.json` | Plugin manifest: name, version, description, and links |
+| `.claude-plugin/plugin.json` | Plugin manifest: name, version, description, icon, and links |
+| `.claude-plugin/icon.png` | Proposed listing icon (1024 × 1024 PNG) |
 | `skills/linkedin-positioning-panel/SKILL.md` | Canonical skill instructions |
 | `skills/linkedin-positioning-panel/LICENSE` | License copy kept with the skill folder |
 | `README.md` | Use, test status, and attribution |
