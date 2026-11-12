@@ -11,13 +11,25 @@ description: >-
 
 # LinkedIn Positioning Panel
 
-Revision: v0.1.1, prepared 2026-11-12 for early testing. The behavior-identical candidate 3 (SHA-256 5c405c7606473caa289949fa2fb27d01e7fc19ea805dd94a04d0ddbf5d627aff) completed one maintainer-reported Claude Code 2.1.322 run with seven simulated positioning perspectives and one separate factual verifier, including one repair and recheck. Only this revision paragraph changed for release preparation. This is limited test evidence, not proof of general reliability or external verification. Seven independent positioning reviewers, blind first-impression review, and natural-language triggering remain unverified.
+Revision: v0.1.2, prepared 2026-11-12 for early testing. Workflow instructions are identical to tested candidate 3 (SHA-256 2e81d84c403da47be9335bbeff28045ecea6451fc9aefc4c8f7a2520d434ff24). Only this revision paragraph changed for release preparation, so this file has a different hash and was not separately runtime-tested. Changes from v0.1.1: explicit source scope, also applied to the verifier; simulated reviewer mode by default, with sub-agents only on explicit authorization; default file delivery that respects the user's output location and keeps reports out of git repositories; collision-free output folders; no negative-status inferences from silence; labeling of post-recheck edits; accurate reporting of write-permission status; and outside-repository location suggestions after chat delivery. Test results from v0.1.1 and from candidates before candidate 3 do not validate these workflow instructions.
 
 Conduct a rigorous, evidence-based review of a LinkedIn profile using seven reviewer perspectives, then produce an accurate, ready-to-edit revision. Be candid and specific, never flattering by default. The purpose is to improve clarity, credible differentiation, discoverability through relevant language, and alignment with the user's stated career direction—not to predict hiring outcomes or manipulate LinkedIn ranking.
 
 ## 1. Intake and scope
 
 Use a user-provided Profile PDF as the recommended starting input; also accept pasted text and screenshots. Combine supplied materials into one dated Profile Snapshot, not necessarily one file. Treat a LinkedIn URL as supplementary context or verification only, never as a prerequisite or evidence of complete coverage. Do not bypass authentication or request passwords, cookies, or session tokens.
+
+### Source scope
+
+A source is **in scope** only when the user names its path, attaches it, pastes it, or explicitly approves it in the conversation. Do not open, extract, or read any other file—including other files in the same folder, files whose names or contents look related, or a local file that seems to match a supplied URL. You may list other filenames without opening them.
+
+Stop and ask **one** concise question, without reading candidates or starting the review, when:
+- no profile source is supplied;
+- a named path does not exist (do not substitute a similarly named file; you may list up to five existing filenames as candidates);
+- only a LinkedIn URL is supplied (ask for a Profile PDF or pasted text; do not treat a local file as that URL's profile);
+- the in-scope sources appear to describe different people.
+
+When the question cannot be answered in this session (for example, non-interactive mode), end with the question; do not proceed on an assumed answer.
 
 Before substantive review:
 1. Inventory each source with a source ID, filename/type, supplied or retrieval date, and page/section/image locator. Record export date only if supplied; otherwise mark unknown. Do not treat the analysis date as the export date.
@@ -59,6 +71,8 @@ When the ledger flags a material ambiguity, do not silently choose a narrower in
 
 Past participation does not establish current membership, but it also does not establish that membership ended. Use past-tense contribution wording without adding “former,” an end date, or a current title unless supported. Distinguish an unsupported addition in the rewrite from a disproved claim about the person. Never resolve either direction from silence.
 
+This applies equally to **negative current-status claims**: "not currently a manager," "no longer a member," "no current team," "has not led since," "only past leadership." A source that is silent about the present supports "the profile does not state current X," not "the person is not X." This rule covers analytical text as well as copy: reviewer inferences, synthesis, positioning strategy, re-review summaries, and the final chat response. When a reviewer records such an inference, keep it as that reviewer's recorded statement but annotate it as unsupported by the source. Never describe it as consistent with or confirmed by the source.
+
 **Non-fabrication rule:** Never invent or silently upgrade employers, job titles, dates, reporting lines, team sizes, budgets, KPIs, awards, degrees, certifications, publications, languages, responsibilities, outcomes, technologies, or skills. Do not change an individual's seniority or scope to fit a target role. Preserve qualifications and uncertainty. If a proposed improvement needs evidence, write `[CONFIRM: precise missing fact]`; do not fill it with a plausible guess.
 
 For every substantive criticism, cite the exact supplied wording or section. For external facts, attach a source. If a section is missing, say "not provided," not "absent from the actual LinkedIn profile."
@@ -81,11 +95,19 @@ For record/superlative claims, distinguish single-item first-sale auction price,
 
 Default to editorial review with a bounded verification queue: complete the positioning audit and rewrite before pursuing optional deep research. List up to five high-value checks with the exact question, evidence required, and output affected. Do not let one claim consume the whole audit. In snapshot-only mode do not browse; use only the declared source inventory. Perform deeper web, archive, or chain research only when requested or specifically necessary, respect access controls, and stop/report inaccessible data without pretending verification succeeded. Keep all personal examples and evidence outside the generic skill.
 
-## 3. Seven independent reviewers
+## 3. Seven reviewer perspectives
 
 Run **seven** separate reviews. Each reviewer receives only: the original snapshot, coverage table, conflict register, stated goals/target role if provided, the factual evidence ledger without editorial judgments, and its own instructions. Do not show one reviewer's judgments to another before all seven finish.
 
-If independent sub-agents are available and their use is authorized by the host and user instructions, use separate agents (parallel where practical). Never claim tool availability without checking it. Provide the first-impression reviewer only its permitted excerpt and the coverage facts for those sections; do not expose the full profile or full ledger to that reviewer. If not, simulate seven separate passes in a single model, isolate each pass from the others as much as possible, and explicitly disclose: **"Seven simulated perspectives; not seven independent agents or real hiring professionals."** Never claim independent-agent execution without it.
+**Execution mode.** Tool availability is not authorization. Default to **simulated mode**: run the seven perspectives as separate passes in your own context, isolating each pass from the others as much as possible. Use separate sub-agents for the seven reviewers only when the user's own words in this conversation explicitly ask for independent, separate, or parallel reviewer agents for this run. A user who authorizes only a factual verifier has not authorized seven reviewer agents. If authorization is unclear, use simulated mode and say how to request agent mode; do not stop to ask.
+
+In agent mode, use separate agents (parallel where practical). Never claim tool availability without checking it. Provide the first-impression reviewer only its permitted excerpt and the coverage facts for those sections; do not expose the full profile or full ledger to that reviewer.
+
+Disclose the mode using exactly one of these labels, unchanged, everywhere it is stated, and never combine them:
+- Simulated mode: **"Seven simulated perspectives; not seven independent agents or real hiring professionals."**
+- Agent mode: **"Seven separate reviewer agents; not real hiring professionals."**
+
+Do not assert which model, or model family, any agent used. Record model information only where the host actually reports it for that agent; otherwise record it as not observed. Never claim independent-agent execution without it. Re-review passes follow the same mode and authorization rule.
 
 Each reviewer must return:
 1. **Verdict:** CLEAR / MIXED / UNCLEAR (clarity of positioning from that perspective, not a hiring prediction).
@@ -146,13 +168,15 @@ Before re-review, compare every revised factual clause against its source for at
 
 ### Factual verification gate
 
-After drafting all three reports, use a fresh factual verifier distinct from the author when agent tools are available and their use is authorized. This verifier is additional to the seven positioning perspectives; a simulated panel may still use one independent factual verifier. Do not imply that this makes all seven perspectives independent. A factual comparison of supplied sources is not external verification (V).
+After drafting all three reports, use a fresh factual verifier distinct from the author when agent tools are available and the user has explicitly authorized a verifier or sub-agents for this run; otherwise run the labeled self-check below and tell the user how to authorize a verifier. Tool availability is not authorization. This verifier is additional to the seven positioning perspectives; a simulated panel may still use one independent factual verifier. Do not imply that this makes all seven perspectives independent. A factual comparison of supplied sources is not external verification (V).
 
-Give the verifier the original snapshot, explicit user confirmations, source locators, all three draft reports including every alternative, and the recorded reviewer statements. Do not provide the author's self-check verdicts, intended fixes, or acceptance ticks. Ask it to reconstruct material support directly from the original sources; treat the author's ledger and conflict labels as fallible. Keep the full-profile verifier separate from any limited-excerpt first-impression reviewer.
+Give the verifier the original snapshot, explicit user confirmations, source locators, all three draft reports including every alternative, and the recorded reviewer statements. The verifier follows the same source scope as the author: give it only in-scope sources and these drafts, name the exact paths it may read, and tell it not to open, list contents of, or search any other file. Record the paths the verifier was permitted to read and, where the host shows its tool calls, the paths it actually opened. Do not provide the author's self-check verdicts, intended fixes, or acceptance ticks. Ask it to reconstruct material support directly from the original sources; treat the author's ledger and conflict labels as fallible. Keep the full-profile verifier separate from any limited-excerpt first-impression reviewer.
 
-Require a discrepancy table: source quote and locator; draft quote and location; changed meaning or unresolved ambiguity; minimally supported correction; whether confirmation is essential. Check every factual clause in main and concise copy for temporal upgrades, individual versus team awards, metric subject and period, counts, and sale categories. Preserve team ownership as “the team won”; “with the team, I won” introduces an individual recipient unless supported. A note outside copy cannot repair a newly selected factual interpretation inside it. Check reviewer attributions against their actual recorded statements.
+Require a discrepancy table: source quote and locator; draft quote and location; changed meaning or unresolved ambiguity; minimally supported correction; whether confirmation is essential. Check every factual clause in main and concise copy for temporal upgrades, individual versus team awards, metric subject and period, counts, and sale categories. Preserve team ownership as “the team won”; “with the team, I won” introduces an individual recipient unless supported. A note outside copy cannot repair a newly selected factual interpretation inside it. Check reviewer attributions against their actual recorded statements. Also check analytical text, reviewer inferences, re-review summaries, and the draft final response for negative current-status claims derived from silence (e.g., "not currently managing anyone," "no longer involved"), and for any description of such a claim as consistent with the source.
 
 The author must address each discrepancy across all affected outputs. Permit at most one repair pass and one focused recheck by the verifier in its fresh verification thread. Supply the actual revised passages for recheck, not a claim that they were fixed. If material unsupported assertions remain, mark affected copy Confirmation required and identify the unresolved blocker; do not label the complete result verified. Avoid an unbounded repair loop.
+
+Any text changed after the focused recheck is **not verifier-checked**. List each such passage, with its location, in PROFILE-AUDIT and in LINKEDIN-REVISED under the label "Changed after recheck; not verifier-checked." Do not describe the delivered copy as verifier-checked, consistent with the source, or free of discrepancies unless no text changed after the recheck. In that case, state that claim as limited to the supplied sources. When post-recheck edits exist, the first paragraph of the final response must say so.
 
 If an independent verifier is unavailable, prohibited, or explicitly excluded, run a separately labeled self-check, disclose the limitation, and do not claim independent factual validation. Do not silently launch agents against a user instruction to use one agent. For unresolved material ambiguities, preserve source wording without sharpening its meaning or offer a conditional draft rather than certify it as ready.
 
@@ -165,13 +189,36 @@ Recommended deliverables:
 2. `POSITIONING-STRATEGY.md`: current inferred positioning, user-stated target positioning, mismatch risks, prioritized recommendations, unanswered questions.
 3. `LINKEDIN-REVISED.md`: revised Headline alternatives, complete About, every supplied Experience entry with exact employer/title/dates, and supported Featured/Skills recommendations, plus a source-linked change log and the two before/after re-reviews. Preserve client lists when they are the only evidence in an entry; never invent responsibilities to make those entries longer. Do not replace full output with one illustrative paragraph and call the run complete.
 
-When filesystem writing is supported and the user requests files, create these files in the user-specified output directory, or by default under `linkedin-positioning-panel/<date-or-session-id>/`. Use a fresh session directory to preserve earlier reports. Follow the host environment's file-saving rules. If filesystem writing is unavailable, return clearly separated Markdown sections in chat; never claim files were created.
+### Delivery
+
+For a complete audit, when filesystem writing is supported, **write the three reports by default**; the user does not need to ask for files. Skip writing only when the user asks for chat-only output (e.g., "only in chat," "don't write files," 「只在對話呈現」「不要寫檔」); then deliver the three reports as clearly separated Markdown sections in chat.
+
+Choose the location in this order:
+1. **User-specified location:** use it. If it is inside a git working tree, write there only because the user chose it; do not stage, commit, or push.
+2. **No location specified, and the working directory is not inside a git working tree:** use the default directory below in the working directory.
+3. **No location specified, and the working directory is inside a git working tree:** do not write personal reports into the repository by default. Use the default directory under a private location outside the repository, such as `~/linkedin-positioning-panel/`, if the host permits it. If that is not possible, deliver in chat and tell the user how to name an output location.
+
+Never stage, commit, or push reports.
+
+**Write permission status.** When a location may be unavailable, record its status as exactly one of the following. Describe it in chat and reports only as what you observed:
+- **Write explicitly prohibited:** the host or a permission rule denied a write or directory-creation attempt for that location, or the user said not to write there. Do not try to get around a prohibition, whether by another tool, shell redirection, a different path to the same place, or a test write.
+- **Write attempted and failed:** a write was attempted and returned an error. Report the error as observed.
+- **Only listing or reading was denied:** a directory listing, existence check, or read was denied, but no write was attempted. This does not show that writing is prohibited. Say only that the location could not be listed or checked. If writing there is not prohibited, you may attempt the write once.
+- **Not attempted:** say so; do not describe the location as blocked.
+
+**Suggesting a location after chat delivery.** When reports were delivered in chat because no permitted location was available:
+- Suggest at least one location outside the repository first, such as a folder under the user's home directory.
+- Do not present an in-repository path as the default or recommended choice. If you mention one, label it as inside the git repository (and therefore at risk of being committed or published), so the user chooses it explicitly.
+
+The default directory is `linkedin-positioning-panel/<YYYY-MM-DD>-<HHMMSS>-<short-session-or-random-id>/`. Create the default directory only immediately before writing the first report. Never write into a default directory that already exists, even if it is empty; choose a new name instead. Do not claim that this session created a directory unless you observed it doing so. If a user-specified directory already contains any file named `PROFILE-AUDIT.md`, `POSITIONING-STRATEGY.md`, or `LINKEDIN-REVISED.md`, do not overwrite, edit, or append to those files, and do not mix new reports among them. Write all three new reports to a new subfolder named like the default directory, and tell the user the actual path. Follow the host environment's file-saving rules. If filesystem writing is unavailable, return clearly separated Markdown sections in chat; never claim files were created. Before reporting files as written, confirm that each of the three files exists and is nonempty.
 
 ## 7. Final response contract
 
+When reports were written to files, the chat response is a **concise summary**. Give the actual file paths, then a few lines per item below, and do not repeat the full reports. In chat-only mode, give the items in full.
+
 Present, in this order:
 1. **Scope and source status:** what was actually read; whether source claims were independently verified; section coverage and unresolved conflicts.
-2. **Seven-reviewer summary:** concise verdicts, explicitly identifying simulated vs independent reviewers.
+2. **Seven-reviewer summary:** concise verdicts, with the exact execution-mode label from section 3.
 3. **Top 3–5 positioning issues:** quoted evidence and priority.
 4. **Revised copy:** publishable text grounded in the profile/user-confirmed facts.
 5. **Open verification questions:** only facts that would materially strengthen the profile.
@@ -194,4 +241,4 @@ Adapted in concept from the MIT-licensed `hiring-panel` skill by Alex Chen (@noc
 
 ## Source-only acceptance check
 
-Before delivering, verify that every substantive criticism has a source locator or is explicitly labeled inference; unavailable sections are not called absent; conflicting claims are not silently resolved; no remembered facts or unsupported achievements entered the rewrite; no private contact details appear unnecessarily; and reviewer execution is accurately disclosed. Record the tested skill revision or file hash and runtime version when observable; otherwise mark them unknown. Do not infer the model identity from its self-description. Keep revision-specific test results separate: a preceding version’s run does not validate the current revision. Report structural validation, scenario checks, model-execution tests, independent-agent execution, file-output validation, and actual Claude Code runtime tests as separate statuses. A model following its own instructions once is not evidence of general reliability. If a deliberately simulated panel is used, do not call the views isolated independent reviews. If the first-impression evaluator has already seen the full material, disclose this contamination or use a fresh limited-context reviewer. Keep supplied facts unaltered in a role/date/metric preservation checklist and check that required files are nonempty and contain all required sections. Report structural validation separately from an actual Claude Code run. Do not claim installation, successful agent execution, or complete platform compatibility without observing it.
+Before delivering, verify that only in-scope sources were opened, by you and by any agent; reports were delivered per the Delivery rules, with no existing report file overwritten or mixed in; the execution-mode label matches what actually ran; no negative current-status claim from silence appears in any output; post-recheck edits are labeled; every substantive criticism has a source locator or is explicitly labeled inference; unavailable sections are not called absent; conflicting claims are not silently resolved; no remembered facts or unsupported achievements entered the rewrite; no private contact details appear unnecessarily; and reviewer execution is accurately disclosed. Record the tested skill revision or file hash and runtime version when observable; otherwise mark them unknown. Do not infer the model identity from its self-description. Keep revision-specific test results separate: a preceding version’s run does not validate the current revision. Report structural validation, scenario checks, model-execution tests, independent-agent execution, file-output validation, and actual Claude Code runtime tests as separate statuses. A model following its own instructions once is not evidence of general reliability. If a deliberately simulated panel is used, do not call the views isolated independent reviews. If the first-impression evaluator has already seen the full material, disclose this contamination or use a fresh limited-context reviewer. Keep supplied facts unaltered in a role/date/metric preservation checklist and check that required files are nonempty and contain all required sections. Report structural validation separately from an actual Claude Code run. Do not claim installation, successful agent execution, or complete platform compatibility without observing it.
