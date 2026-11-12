@@ -1,23 +1,36 @@
 # Changelog
 
-## Unreleased — Plugin packaging
+## v0.1.3 — Plugin packaging, unreleased
 
-Packaging for a possible listing in Anthropic's plugin directory. No listing has been submitted or published.
+Packaging for a possible listing in Anthropic's plugin directory. No listing has been submitted or published, and no tag or GitHub release has been created.
 
 ### Added
 
-- `.claude-plugin/plugin.json` manifest (name `linkedin-positioning-panel`, version `0.1.2`, MIT license, homepage and repository links). The description states that the plugin is not affiliated with or endorsed by LinkedIn.
+- `.claude-plugin/plugin.json` manifest: name `linkedin-positioning-panel`, version `0.1.3`, MIT license, and homepage and repository links. The description states that the plugin is not affiliated with or endorsed by LinkedIn.
 - `examples/` with two fictional sample profiles, in English and Traditional Chinese.
-- README sections (English and Traditional Chinese) on loading the repository as a plugin and on three example prompts.
+- README sections (English and Traditional Chinese):
+  - loading the repository as a plugin, started from inside the repository folder so that `examples/` paths resolve;
+  - example prompts, listed separately for Claude Code and for claude.ai chat or Cowork (the latter untested);
+  - data handling, covering Claude processing, report files, external lookups, LinkedIn URLs, and the absence of an author backend.
 
 ### Unchanged
 
 - `skills/linkedin-positioning-panel/SKILL.md` is byte-identical to v0.1.2 (SHA-256 `59efb0a511e4a31df450b97cc537acfab997f378ba8aae51b05b99b981e3dcf2`).
 
-### Checks
+### Not decided
 
-- `claude plugin validate --profile directory .` passes (Claude Code 2.1.322). With `--strict`, it fails only on the missing listing icon warning.
-- Loading the repository with `--plugin-dir` in an isolated configuration listed the skill as `linkedin-positioning-panel:linkedin-positioning-panel`, at plugin version 0.1.2. The short command `/linkedin-positioning-panel` also loaded it.
+- Listing icon: none added. The official plugin manifest reference documents an `icon` field that takes the path of an image file inside the plugin. Size limits (512 to 2048 px, under 2 MB, no SVG or WebP) and the rule that an icon is taken only the first time the plugin is saved or submitted appear in the `claude plugin validate` output of Claude Code 2.1.322. They were not found in the official web documentation and are unconfirmed.
+- Privacy policy link: the plugin manifest supports `privacyPolicyUrl`. Whether the directory requires one for an instructions-only plugin is unconfirmed.
+
+### Checks (Claude Code 2.1.322, Linux, one run)
+
+- `claude plugin validate --profile directory .` passes. With `--strict`, the only failure is the missing-icon warning.
+- README example 1 was run from a fresh clone, started inside the repository folder with `--plugin-dir .`. The run used an isolated configuration with skill sync off, so this plugin's skill was the only one of its name.
+  - The skill loaded as `linkedin-positioning-panel:linkedin-positioning-panel`, at plugin version 0.1.3.
+  - Only the named sample file was opened. No agents were launched, and no web tool was attempted (web tools were not allowed).
+  - Three nonempty reports were written outside the repository, and the clone's git state was unchanged.
+  - The host had a session-specific scratch folder, and the reports were written there. The reply said the location is temporary and suggested copying the reports to a permanent folder.
+  - Planted cases (a team award, past volunteering, and figures without a period) were preserved in the revised copy.
 - The directory's own validation, security scan, and policy review have not been run. Behavior in claude.ai chat and Cowork remains untested.
 
 ## v0.1.2 — Prepared 2026-11-12
