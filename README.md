@@ -115,7 +115,7 @@ The examples use the fictional profiles in `examples/`. Replace them with your o
 
 ### In claude.ai chat or Cowork (untested)
 
-There is no repository path to point to. Download a sample file from `examples/` on GitHub, attach it to the conversation (or paste its text), and ask in words, for example:
+These examples attach a file or paste text instead of relying on a local project path. Download a sample file from `examples/` on GitHub, attach it to the conversation (or paste its text), and ask in words, for example:
 
 `Use the LinkedIn Positioning Panel skill to perform a General Audit of the attached profile. Use only the attached file.`
 
@@ -149,7 +149,7 @@ This plugin contains instructions only: one skill, with no hooks, scripts, MCP s
 | What happens | Details |
 | --- | --- |
 | Claude processing | The profile content and anything else you supply are sent to Claude as part of your conversation and processed under your Claude account's terms and data settings. If you authorize agents, they receive the in-scope sources and drafts within the same session. |
-| Report files | By default, three Markdown reports containing your profile content and the analysis are written to the location described in Output, and they stay there until you delete them. Chat-only delivery writes no report files. While working, the host may also create temporary files, such as page images used to check a PDF's layout, in its working or scratch locations. |
+| Report files | When the environment supports file writing, a complete audit by default writes three Markdown reports containing your profile content and the analysis to the location described in Output. How long they are kept depends on the host: files in cloud sessions or temporary locations may be removed, so download or copy the reports to a persistent location if you need to keep them. Chat-only delivery writes no report files. While working, the host may also create temporary files, such as page images used to check a PDF's layout, in its working or scratch locations. |
 | External lookups | When you ask it to use only the supplied sources, the skill does not browse. Otherwise it may check external claims when you ask for verification, or when it judges that accessible authoritative sources materially affect the audit. Such lookups use only the web or fetch tools your host provides, and they send search terms, such as employer, award, or credential names, to those services. To prevent lookups, say "use only the supplied sources; do not browse." Whether lookups happen without such an instruction has **not been tested**. |
 | LinkedIn URLs | URLs are supplementary sources only. The skill does not ask for passwords, cookies, or session tokens, and it does not bypass access controls. Opening a URL, if it happens, uses your host's tools. |
 | Author backend | None. |
