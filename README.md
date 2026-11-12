@@ -2,7 +2,7 @@
 
 English | [繁體中文](README.zh-TW.md)
 
-**v0.1.1 · Early testing release (prepared for publication)**
+**v0.1.1 · Early testing release**
 
 An AI-assisted LinkedIn profile review skill for professional positioning, evidence-based revisions, and clear attribution of individual, team, and collaborative work. Designed for people across industries, not a single profession or career stage.
 
