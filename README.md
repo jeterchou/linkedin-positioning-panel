@@ -113,14 +113,14 @@ All tests below used fictional profiles only (an English two-column PDF and Chin
 
 ### Candidate 3 (this revision; SKILL.md SHA-256 `2e81d84c403da47be9335bbeff28045ecea6451fc9aefc4c8f7a2520d434ff24`)
 
-Candidate 3 changes only the write-permission reporting and the location suggestions after chat delivery. Only those two cases were tested. Each ran in an isolated configuration in which exactly one skill with this name was available, loaded from the project folder, with the tested file recorded by path and SHA-256. Written files, chat explanations, and git state were checked directly.
+Candidate 3 changes only the write-permission reporting and the location suggestions after chat delivery. Only those two cases were tested. Each ran in an isolated configuration in which only one skill with this name was available, and that file's SHA-256 matched this candidate. The actual load path did not appear directly in the run records, so attributing the loaded instructions to that file is an inference. Written files, chat explanations, and git state were checked directly.
 
 | Check | Observed result |
 | --- | --- |
-| Git repository, writes outside the repository explicitly denied by permission rules | No files written anywhere; reports delivered in chat. The one denied attempt (a command that included creating a folder outside the repository) was reported as an explicit prohibition; the home folder was reported as not attempted rather than blocked. The suggested location was outside the repository, and no in-repository example was given. HEAD, index, working tree, and the remote were unchanged |
+| Git repository, writes outside the repository denied by permission rules | Alternative delivery behaved as expected; the reason for the denial could not be confirmed. No files were written anywhere, the reports were delivered in chat, and the denial was not circumvented. HEAD, index, working tree, and the remote were unchanged. One command was denied, but it combined several operations and the host did not say which one caused the denial; the run described it as an explicit prohibition of creating a folder, which these records do not confirm. The home folder was reported as not attempted rather than blocked. The suggested location was outside the repository, and no in-repository example was given |
 | Git repository, directory listing outside the repository denied but writing allowed | After the listing was denied, the skill attempted the write once; three nonempty reports were written outside the repository, and no blocked location was claimed. HEAD, index, working tree, and the remote were unchanged |
 
-Not exercised in these runs: a write that was attempted and failed with an error, and labeling an in-repository example (none was offered). The denied command in the first case also contained other operations, and the host did not say which part caused the denial.
+Not exercised in these runs: a denial confirmed to have been caused by a write; a write that was attempted and failed with an error; and labeling an in-repository example (none was offered).
 
 ### Candidate 2 (earlier revision; evidence not counted for candidate 3)
 
@@ -135,7 +135,7 @@ Main-agent and sub-agent tool calls were both inspected. File locations and git 
 | Output folder already containing reports | New reports went to a new subfolder; the earlier files' SHA-256 hashes were unchanged |
 | Git repository, no location, host allows a private folder outside the repository | Reports written outside the repository; HEAD, index, working tree, and the remote were unchanged |
 | Git repository, user-specified location inside the repository | Reports written there as untracked files; nothing staged, committed, or pushed |
-| Git repository, writes outside the repository denied by permission rules | No files written anywhere; reports delivered in chat. The run described the home folder as blocked based on a denied listing, not an attempted write, and its example location was inside the repository. Candidate 3 addresses both points |
+| Git repository, writes outside the repository denied by permission rules | No files written anywhere; reports delivered in chat. The run described the home folder as blocked based on a denied listing, not an attempted write, and its example location was inside the repository. Candidate 3 adds rules for both points |
 
 In the candidate 2 git-repository runs, a second copy of the same instructions (identical body, reformatted description) was also installed at user level; which copy was loaded could not be distinguished.
 
