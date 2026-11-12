@@ -2,7 +2,7 @@
 
 English | [繁體中文](README.zh-TW.md)
 
-**v0.1.2 candidate 3 · Pre-release candidate; not released**
+**v0.1.2 · Early testing release**
 
 An AI-assisted LinkedIn profile review skill for professional positioning, evidence-based revisions, and clear attribution of individual, team, and collaborative work. Designed for people across industries, not a single profession or career stage.
 
@@ -111,7 +111,16 @@ Never invent or upgrade job titles, employers, dates, responsibilities, team siz
 
 All tests below used fictional profiles only (an English two-column PDF and Chinese pasted text) in private, temporary projects. They ran in Claude Code 2.1.322 on Linux in non-interactive mode (`claude -p`), one run per case. The host reported the model; it was not independently established. Results from one revision are not counted as passes for another.
 
-### Candidate 3 (this revision; SKILL.md SHA-256 `2e81d84c403da47be9335bbeff28045ecea6451fc9aefc4c8f7a2520d434ff24`)
+### Version traceability
+
+| File | SHA-256 |
+| --- | --- |
+| Released SKILL.md (v0.1.2) | `59efb0a511e4a31df450b97cc537acfab997f378ba8aae51b05b99b981e3dcf2` |
+| Tested candidate 3 | `2e81d84c403da47be9335bbeff28045ecea6451fc9aefc4c8f7a2520d434ff24` |
+
+Only the revision/status paragraph changed between tested candidate 3 and the v0.1.2 release file; the workflow instructions are identical. The release-labelled file was not separately runtime-tested. This describes the prepared release; it does not confirm that a GitHub tag or release has been published.
+
+### Candidate 3 (tested candidate for v0.1.2; SKILL.md SHA-256 `2e81d84c403da47be9335bbeff28045ecea6451fc9aefc4c8f7a2520d434ff24`)
 
 Candidate 3 changes only the write-permission reporting and the location suggestions after chat delivery. Only those two cases were tested. Each ran in an isolated configuration in which only one skill with this name was available, and that file's SHA-256 matched this candidate. The actual load path did not appear directly in the run records, so attributing the loaded instructions to that file is an inference. Written files, chat explanations, and git state were checked directly.
 

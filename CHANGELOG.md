@@ -1,8 +1,8 @@
 # Changelog
 
-## v0.1.2 — Candidate 3, unreleased
+## v0.1.2 — Prepared 2026-11-12
 
-Pre-release candidate for maintainer review. No tag or GitHub release has been created. The SKILL.md revision paragraph still identifies this file as candidate 3.
+Early testing release prepared for publication; the GitHub tag and release are created separately by the maintainer.
 
 ### Changed
 
@@ -30,6 +30,7 @@ Tests used fictional profiles only, in Claude Code 2.1.322 on Linux in non-inter
 - **Candidate 3** (SKILL.md SHA-256 `2e81d84c403da47be9335bbeff28045ecea6451fc9aefc4c8f7a2520d434ff24`): two git-repository cases were tested, each in an isolated configuration where only one skill of this name was available, matching this candidate's SHA-256. The actual load path was not directly recorded, so attribution to that file is an inference. Written files, chat explanations, and git state were checked directly. (1) Writes outside the repository denied by permission rules: alternative delivery behaved as expected (no files written, reports in chat, denial not circumvented, git state unchanged), but the reason for the denial could not be confirmed, because the one denied command combined several operations. (2) Outside listing denied, writing allowed: the write was attempted, and three nonempty reports were written outside the repository with git state unchanged. Not exercised: a denial confirmed to have been caused by a write, a write that failed with an error, and labeling an in-repository example.
 - **Candidate 2** (SKILL.md SHA-256 `05e9be5a68683454edd673c149dff3f18143ffa5d997a49952e6511d46e48838`): default file delivery, chat-only delivery, verifier source scope, existing output folders, and three git-repository delivery cases. Not rerun on candidate 3.
 - **Candidate 1**: source scope, missing-input handling, natural-language triggering, and fact preservation. Not rerun on candidate 2 or 3.
+- **Release file** (SKILL.md SHA-256 `59efb0a511e4a31df450b97cc537acfab997f378ba8aae51b05b99b981e3dcf2`): only the revision/status paragraph changed from tested candidate 3 (`2e81d84c403da47be9335bbeff28045ecea6451fc9aefc4c8f7a2520d434ff24`); workflow instructions are identical. The release-labelled file was not separately runtime-tested.
 - Agent mode for the seven reviewers, interactive sessions, Target Role Audit, supplementary-evidence updates, scanned PDFs, other operating systems, and repeat reliability remain untested.
 
 ## v0.1.1 — Prepared 2026-11-12
