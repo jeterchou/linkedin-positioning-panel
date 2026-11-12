@@ -1,8 +1,8 @@
 # Changelog
 
-## v0.1.2 — Candidate 2, unreleased
+## v0.1.2 — Candidate 3, unreleased
 
-Pre-release candidate for maintainer review. No tag or GitHub release has been created. The SKILL.md revision paragraph still identifies this file as candidate 2.
+Pre-release candidate for maintainer review. No tag or GitHub release has been created. The SKILL.md revision paragraph still identifies this file as candidate 3.
 
 ### Changed
 
@@ -20,12 +20,16 @@ Pre-release candidate for maintainer review. No tag or GitHub release has been c
 - Negative current-status claims from silence (for example, "not currently a manager") are prohibited in copy and analysis and included in the verifier checklist.
 - Text changed after the verifier's recheck is labeled "Changed after recheck; not verifier-checked," and the final response states this first.
 - Acceptance checks for source scope, delivery, and execution labels.
+- Candidate 3: write-permission status is reported only as observed (write explicitly prohibited, write attempted and failed, only listing or reading denied, or not attempted). A denied listing is not reported as a write failure, and explicit prohibitions are not circumvented.
+- Candidate 3: after chat delivery, location suggestions start with a location outside the repository. Any in-repository example is labeled as such.
 
 ### Validation
 
-- Tests used fictional profiles only, in Claude Code 2.1.322 on Linux in non-interactive mode, one run per case. See README Test status for per-revision evidence.
-- Candidate 2 (SKILL.md SHA-256 `05e9be5a68683454edd673c149dff3f18143ffa5d997a49952e6511d46e48838`) was tested for default file delivery, chat-only delivery, verifier source scope, existing output folders, and three git-repository delivery cases. Paths and git state were checked directly.
-- Source scope, missing-input handling, natural-language triggering, and fact preservation were tested on candidate 1 only; they are not counted as candidate 2 results.
+Tests used fictional profiles only, in Claude Code 2.1.322 on Linux in non-interactive mode, one run per case. Evidence is recorded per revision and is not carried forward. See README Test status for details.
+
+- **Candidate 3** (SKILL.md SHA-256 `2e81d84c403da47be9335bbeff28045ecea6451fc9aefc4c8f7a2520d434ff24`): two git-repository cases were tested: writes outside the repository explicitly denied, and outside listing denied with writing allowed. The runs used an isolated configuration with exactly one skill of this name available. Written files, chat explanations, and git state were checked directly. Not exercised: a write that failed with an error, and labeling an in-repository example.
+- **Candidate 2** (SKILL.md SHA-256 `05e9be5a68683454edd673c149dff3f18143ffa5d997a49952e6511d46e48838`): default file delivery, chat-only delivery, verifier source scope, existing output folders, and three git-repository delivery cases. Not rerun on candidate 3.
+- **Candidate 1**: source scope, missing-input handling, natural-language triggering, and fact preservation. Not rerun on candidate 2 or 3.
 - Agent mode for the seven reviewers, interactive sessions, Target Role Audit, supplementary-evidence updates, scanned PDFs, other operating systems, and repeat reliability remain untested.
 
 ## v0.1.1 — Prepared 2026-11-12

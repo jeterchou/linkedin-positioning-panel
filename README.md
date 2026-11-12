@@ -2,7 +2,7 @@
 
 English | [繁體中文](README.zh-TW.md)
 
-**v0.1.2 candidate 2 · Pre-release candidate; not released**
+**v0.1.2 candidate 3 · Pre-release candidate; not released**
 
 An AI-assisted LinkedIn profile review skill for professional positioning, evidence-based revisions, and clear attribution of individual, team, and collaborative work. Designed for people across industries, not a single profession or career stage.
 
@@ -90,7 +90,8 @@ For a Target Role Audit, also provide a target job description. A current Claude
 - If you ask for chat-only output (for example, "only in chat" or "don't write files"), no files are written and the reports appear in chat.
 - If you specify an output location, the skill uses it, including a location inside a git repository; it does not stage, commit, or push the reports.
 - If you don't specify a location and the working directory is not inside a git repository, the reports go to `linkedin-positioning-panel/<date>-<time>-<id>/` in that directory.
-- If you don't specify a location and the working directory is inside a git repository, the skill does not write personal reports into that repository. It uses a private location outside the repository if the host permits; otherwise it delivers in chat and asks you to name a location.
+- If you don't specify a location and the working directory is inside a git repository, the skill does not write personal reports into that repository. It uses a private location outside the repository if the host permits; otherwise it delivers in chat and asks you to name a location. It suggests a location outside the repository first; any in-repository example is labeled as inside the repository, so choosing it is your explicit decision.
+- The skill reports each location's status only as observed: write explicitly prohibited, write attempted and failed, only listing or reading denied, or not attempted. A denied directory listing is not reported as a write failure. The skill does not try to get around an explicit prohibition.
 - The skill never overwrites or mixes in earlier reports. If the chosen folder already has report files, the new reports go to a new subfolder.
 - The skill never stages, commits, or pushes reports.
 
@@ -110,11 +111,22 @@ Never invent or upgrade job titles, employers, dates, responsibilities, team siz
 
 All tests below used fictional profiles only (an English two-column PDF and Chinese pasted text) in private, temporary projects. They ran in Claude Code 2.1.322 on Linux in non-interactive mode (`claude -p`), one run per case. The host reported the model; it was not independently established. Results from one revision are not counted as passes for another.
 
-### Candidate 2 (this revision; SKILL.md SHA-256 `05e9be5a68683454edd673c149dff3f18143ffa5d997a49952e6511d46e48838`)
+### Candidate 3 (this revision; SKILL.md SHA-256 `2e81d84c403da47be9335bbeff28045ecea6451fc9aefc4c8f7a2520d434ff24`)
 
-Main-agent and sub-agent tool calls were both inspected. File locations and git state were checked directly on disk and with git, not taken from the model's own report.
+Candidate 3 changes only the write-permission reporting and the location suggestions after chat delivery. Only those two cases were tested. Each ran in an isolated configuration in which exactly one skill with this name was available, loaded from the project folder, with the tested file recorded by path and SHA-256. Written files, chat explanations, and git state were checked directly.
 
 | Check | Observed result |
+| --- | --- |
+| Git repository, writes outside the repository explicitly denied by permission rules | No files written anywhere; reports delivered in chat. The one denied attempt (a command that included creating a folder outside the repository) was reported as an explicit prohibition; the home folder was reported as not attempted rather than blocked. The suggested location was outside the repository, and no in-repository example was given. HEAD, index, working tree, and the remote were unchanged |
+| Git repository, directory listing outside the repository denied but writing allowed | After the listing was denied, the skill attempted the write once; three nonempty reports were written outside the repository, and no blocked location was claimed. HEAD, index, working tree, and the remote were unchanged |
+
+Not exercised in these runs: a write that was attempted and failed with an error, and labeling an in-repository example (none was offered). The denied command in the first case also contained other operations, and the host did not say which part caused the denial.
+
+### Candidate 2 (earlier revision; evidence not counted for candidate 3)
+
+Main-agent and sub-agent tool calls were both inspected. File locations and git state were checked directly on disk and with git, not taken from the model's own report. Candidate 3 did not change the rules behind these checks, but they were **not rerun** on candidate 3.
+
+| Check | Candidate 2 result |
 | --- | --- |
 | YAML/name structure | Frontmatter checked |
 | Short full audit, no location, not a git repository | Three nonempty reports written to a new `<date>-<time>-<id>` folder; chat gave a short summary; simulated panel and self-check disclosed; no agents launched |
@@ -123,13 +135,13 @@ Main-agent and sub-agent tool calls were both inspected. File locations and git 
 | Output folder already containing reports | New reports went to a new subfolder; the earlier files' SHA-256 hashes were unchanged |
 | Git repository, no location, host allows a private folder outside the repository | Reports written outside the repository; HEAD, index, working tree, and the remote were unchanged |
 | Git repository, user-specified location inside the repository | Reports written there as untracked files; nothing staged, committed, or pushed |
-| Git repository, writes outside the repository denied by permission rules | No files written anywhere; reports delivered in chat with a request for a location. The run inferred that the home folder was blocked from a denied listing rather than from an attempted write |
+| Git repository, writes outside the repository denied by permission rules | No files written anywhere; reports delivered in chat. The run described the home folder as blocked based on a denied listing, not an attempted write, and its example location was inside the repository. Candidate 3 addresses both points |
 
-In the git-repository runs, a second copy of the same instructions (identical body, reformatted description) was also installed at user level; which copy was loaded could not be distinguished.
+In the candidate 2 git-repository runs, a second copy of the same instructions (identical body, reformatted description) was also installed at user level; which copy was loaded could not be distinguished.
 
-### Candidate 1 (earlier revision; evidence not counted for candidate 2)
+### Candidate 1 (earlier revision; evidence not counted for candidates 2 or 3)
 
-These areas were tested on candidate 1, one run per case. Candidate 2 did not change the rules for these areas, but these cases were **not rerun** on candidate 2.
+These areas were tested on candidate 1, one run per case. Later candidates did not change the rules for these areas, but these cases were **not rerun** on candidate 2 or 3.
 
 | Check | Candidate 1 result |
 | --- | --- |
@@ -140,7 +152,7 @@ These areas were tested on candidate 1, one run per case. Candidate 2 did not ch
 
 ### Not tested
 
-Agent mode for the seven reviewers; interactive sessions; Target Role Audit; supplementary-evidence updates; scanned PDFs; macOS or Windows; repeated runs for reliability; blind first-impression review (not achieved in simulated mode); LinkedIn access, complete exports, and platform character limits.
+Agent mode for the seven reviewers; interactive sessions, including permission prompts for writing outside a repository; a write attempted and failed with an error; labeling of in-repository location examples; Target Role Audit; supplementary-evidence updates; scanned PDFs; macOS or Windows; repeated runs for reliability; blind first-impression review (not achieved in simulated mode); LinkedIn access, complete exports, and platform character limits.
 
 Source comparison is not external corroboration. PDF-reading tools and extraction quality vary by environment, and users must review every proposed profile edit before publishing. Public documentation describes only the workflow, test scope, and limitations, without disclosing a tester's personal experience, source text, revised copy, or individual confirmation items. Private inputs and personal reports are not distributed.
 

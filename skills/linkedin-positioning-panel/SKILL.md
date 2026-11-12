@@ -11,7 +11,7 @@ description: >-
 
 # LinkedIn Positioning Panel
 
-Revision: v0.1.2 candidate 2, prepared 2026-11-12 for private retesting; not released. Changes from v0.1.1: explicit source scope, also applied to the verifier; simulated reviewer mode by default, with sub-agents only on explicit authorization; default file delivery that respects the user's output location and keeps reports out of git repositories; collision-free output folders; no negative-status inferences from silence; and labeling of post-recheck edits. Test results from v0.1.1 and earlier candidates do not validate this revision.
+Revision: v0.1.2 candidate 3, prepared 2026-11-12 for private retesting; not released. Changes from v0.1.1: explicit source scope, also applied to the verifier; simulated reviewer mode by default, with sub-agents only on explicit authorization; default file delivery that respects the user's output location and keeps reports out of git repositories; collision-free output folders; no negative-status inferences from silence; labeling of post-recheck edits; accurate reporting of write-permission status; and outside-repository location suggestions after chat delivery. Test results from v0.1.1 and earlier candidates do not validate this revision.
 
 Conduct a rigorous, evidence-based review of a LinkedIn profile using seven reviewer perspectives, then produce an accurate, ready-to-edit revision. Be candid and specific, never flattering by default. The purpose is to improve clarity, credible differentiation, discoverability through relevant language, and alignment with the user's stated career direction—not to predict hiring outcomes or manipulate LinkedIn ranking.
 
@@ -199,6 +199,16 @@ Choose the location in this order:
 3. **No location specified, and the working directory is inside a git working tree:** do not write personal reports into the repository by default. Use the default directory under a private location outside the repository, such as `~/linkedin-positioning-panel/`, if the host permits it. If that is not possible, deliver in chat and tell the user how to name an output location.
 
 Never stage, commit, or push reports.
+
+**Write permission status.** When a location may be unavailable, record its status as exactly one of the following. Describe it in chat and reports only as what you observed:
+- **Write explicitly prohibited:** the host or a permission rule denied a write or directory-creation attempt for that location, or the user said not to write there. Do not try to get around a prohibition, whether by another tool, shell redirection, a different path to the same place, or a test write.
+- **Write attempted and failed:** a write was attempted and returned an error. Report the error as observed.
+- **Only listing or reading was denied:** a directory listing, existence check, or read was denied, but no write was attempted. This does not show that writing is prohibited. Say only that the location could not be listed or checked. If writing there is not prohibited, you may attempt the write once.
+- **Not attempted:** say so; do not describe the location as blocked.
+
+**Suggesting a location after chat delivery.** When reports were delivered in chat because no permitted location was available:
+- Suggest at least one location outside the repository first, such as a folder under the user's home directory.
+- Do not present an in-repository path as the default or recommended choice. If you mention one, label it as inside the git repository (and therefore at risk of being committed or published), so the user chooses it explicitly.
 
 The default directory is `linkedin-positioning-panel/<YYYY-MM-DD>-<HHMMSS>-<short-session-or-random-id>/`. Create the default directory only immediately before writing the first report. Never write into a default directory that already exists, even if it is empty; choose a new name instead. Do not claim that this session created a directory unless you observed it doing so. If a user-specified directory already contains any file named `PROFILE-AUDIT.md`, `POSITIONING-STRATEGY.md`, or `LINKEDIN-REVISED.md`, do not overwrite, edit, or append to those files, and do not mix new reports among them. Write all three new reports to a new subfolder named like the default directory, and tell the user the actual path. Follow the host environment's file-saving rules. If filesystem writing is unavailable, return clearly separated Markdown sections in chat; never claim files were created. Before reporting files as written, confirm that each of the three files exists and is nonempty.
 
