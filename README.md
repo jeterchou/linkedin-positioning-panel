@@ -44,7 +44,7 @@ Having agent tools available does not count as authorization. Authorizing a veri
 | Path | Purpose |
 | --- | --- |
 | `.claude-plugin/plugin.json` | Plugin manifest: name, version, description, icon, and links |
-| `.claude-plugin/icon.png` | Proposed listing icon (1024 × 1024 PNG) |
+| Listing icon | A 1024 × 1024 PNG in the `.claude-plugin` folder, named by the `icon` field in `plugin.json` |
 | `skills/linkedin-positioning-panel/SKILL.md` | Canonical skill instructions |
 | `skills/linkedin-positioning-panel/LICENSE` | License copy kept with the skill folder |
 | `README.md` | Use, test status, and attribution |

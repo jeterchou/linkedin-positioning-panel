@@ -44,7 +44,7 @@ Skill 只開啟你指定、附加或貼上的來源；經授權的事實檢查�
 | 路徑 | 用途 |
 | --- | --- |
 | `.claude-plugin/plugin.json` | Plugin 設定檔：名稱、版本、說明、圖示與連結 |
-| `.claude-plugin/icon.png` | 預定的目錄圖示（1024 × 1024 PNG） |
+| 目錄圖示 | `.claude-plugin` 資料夾中的 1024 × 1024 PNG，由 `plugin.json` 的 `icon` 欄位指定 |
 | `skills/linkedin-positioning-panel/SKILL.md` | 核心 Skill 指令 |
 | `skills/linkedin-positioning-panel/LICENSE` | 隨 Skill 資料夾保留的授權條款副本 |
 | `README.md` | 英文使用說明、測試狀態與致謝 |
