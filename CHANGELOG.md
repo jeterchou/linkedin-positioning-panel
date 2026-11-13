@@ -11,7 +11,7 @@ Packaging for a possible listing in Anthropic's plugin directory. The two steps 
 
 - `.claude-plugin/plugin.json` manifest: name `linkedin-positioning-panel`, version `0.1.3`, MIT license, and homepage and repository links. The description states that the plugin is not affiliated with or endorsed by LinkedIn.
 - `examples/` with two fictional sample profiles, in English and Traditional Chinese.
-- A proposed 1024 × 1024 PNG listing icon with no third-party marks, in the `.claude-plugin` folder and named by the `icon` field in `plugin.json`. The documentation does not spell out the image's path, because the directory's validator holds a plugin for review when a text file names a bundled image (finding `UNREAD_ASSET_REFERENCED`).
+- A proposed 1024 × 1024 PNG listing icon with no third-party marks, in the `.claude-plugin` folder and named by the `icon` field in `plugin.json`. The documentation does not spell out the image's path. When the directory portal validated commit `c77fe0d`, it reported a policy hold (`UNREAD_ASSET_REFERENCED`) for each of the three text files that named it.
 - README sections (English and Traditional Chinese):
   - loading the repository as a plugin, started from inside the repository folder so that `examples/` paths resolve;
   - example prompts, listed separately for Claude Code and for claude.ai chat or Cowork (the latter untested);
