@@ -104,7 +104,11 @@ The repository folder is a git repository. If you name no output location, the s
 
 ### claude.ai chat and Cowork
 
-Skills in a plugin also load in claude.ai chat and Cowork. Until a directory listing exists, the plugin must be added to your account from its files. Behavior on these surfaces, including file delivery, has **not been tested**.
+Skills in a plugin also load in claude.ai chat and Cowork. Until a directory listing exists, add the plugin from a zip of the plugin folder: **Customize → Plugins → Add → Upload plugin**. Skills run in Claude's code sandbox there, so **Code execution and file creation** must be on under Settings → Capabilities.
+
+When the plugin is uploaded this way, claude.ai rewrites the multi-line `description` in SKILL.md's front matter as a single line. The SKILL.md copy on your account therefore has a different SHA-256 from the repository file, although the rest of the content is identical. In one test, the uploaded plugin was listed as "Linkedin positioning panel", not by its `displayName`, with a generic icon.
+
+claude.ai chat was tested once (see Test status). Cowork has **not been tested**.
 
 ## Example prompts
 
@@ -119,7 +123,7 @@ The examples use the fictional profiles in `examples/`. Replace them with your o
 3. Chinese analysis with an authorized verifier and a chosen output folder:
    `/linkedin-positioning-panel 請對 examples/sample-profile-zh.md 執行 General Audit，報告存到 ~/private/linkedin-review/。我授權使用一個獨立事實檢查代理。`
 
-### In claude.ai chat or Cowork (untested)
+### In claude.ai chat or Cowork
 
 These examples attach a file or paste text instead of relying on a local project path. Download a sample file from `examples/` on GitHub, attach it to the conversation (or paste its text), and ask in words, for example:
 
@@ -173,6 +177,18 @@ Never invent or upgrade job titles, employers, dates, responsibilities, team siz
 ## Test status
 
 All tests below used fictional profiles only (an English two-column PDF and Chinese pasted text) in private, temporary projects. They ran in Claude Code 2.1.322 on Linux in non-interactive mode (`claude -p`), one run per case. The host reported the model; it was not independently established. Results from one revision are not counted as passes for another.
+
+### Plugin packaging v0.1.3 (SKILL.md unchanged from v0.1.2)
+
+One run per check. SKILL.md is the v0.1.2 release file.
+
+| Check | Observed result |
+| --- | --- |
+| Package validation | `claude plugin validate --strict --profile directory .` passes (Claude Code 2.1.322) |
+| Claude Code, `--plugin-dir .` from the repository folder, example 1 | Loaded at plugin version 0.1.3. Only the named sample file was opened, no agents were launched, and no web tool was attempted. Three reports were written outside the repository, and git state was unchanged. The host's session scratch folder was used, and the reply said it is temporary |
+| claude.ai chat, uploaded plugin, General Audit of an attached fictional sample (Test A) | Loaded at version 0.1.3. Only the attached file was read, and no external lookup or agent was used. The simulated-mode label and the self-check were disclosed. Three report files were produced, and the reply was a summary. Team award, unscoped figures, past volunteering, and dated coordination were preserved. The reply gave a relative report path without saying where files are kept or for how long. The web search setting was not recorded |
+| claude.ai chat, chat-only request (Test B) | Not tested |
+| Cowork | Not tested |
 
 ### Version traceability
 

@@ -104,7 +104,11 @@ claude --plugin-dir .
 
 ### claude.ai 對話與 Cowork
 
-Plugin 中的 Skill 也會在 claude.ai 對話與 Cowork 中載入。上架前，需要用 plugin 檔案自行加入帳號。在這兩個環境中的行為（包括檔案交付）**尚未測試**。
+Plugin 中的 Skill 也會在 claude.ai 對話與 Cowork 中載入。上架前，請用 plugin 資料夾的壓縮檔加入帳號：**Customize → Plugins → Add → Upload plugin**。Skill 在那裡的程式碼沙箱中執行，因此必須在 Settings → Capabilities 開啟 **Code execution and file creation**。
+
+用這種方式上傳時，claude.ai 會把 SKILL.md 開頭設定區中多行的 `description` 改成單行。因此帳號中的 SKILL.md 副本，SHA-256 會和儲存庫中的檔案不同，但其餘內容完全相同。在一次測試中，上傳的 plugin 顯示名稱為「Linkedin positioning panel」，沒有使用 `displayName`，圖示也是通用圖示。
+
+claude.ai 對話已測試一次（見「測試狀態」）。Cowork **尚未測試**。
 
 ## 範例提示
 
@@ -119,7 +123,7 @@ Plugin 中的 Skill 也會在 claude.ai 對話與 Cowork 中載入。上架前�
 3. 英文檔案，授權事實檢查代理並指定輸出位置：
    `/linkedin-positioning-panel Perform a General Audit of examples/sample-profile-en.md. Save the reports to ~/private/linkedin-review/. I authorize one separate factual verifier agent.`
 
-### 在 claude.ai 對話或 Cowork 中（尚未測試）
+### 在 claude.ai 對話或 Cowork 中
 
 本組範例採附加檔案或貼上文字，不依賴本機專案路徑。請從 GitHub 上的 `examples/` 下載範例檔，附加到對話中（或貼上文字），再用文字提出需求，例如：
 
@@ -173,6 +177,18 @@ Plugin 中的 Skill 也會在 claude.ai 對話與 Cowork 中載入。上架前�
 ## 測試狀態
 
 以下測試只使用虛構的個人檔案（一份英文雙欄 PDF 與一份中文貼上文字），在私人、臨時的專案中執行。環境為 Linux 上的 Claude Code 2.1.322 非互動模式（`claude -p`），每個案例各執行一次。模型由主機回報，未經獨立確認。一個版本的結果不計為另一個版本的通過。
+
+### Plugin 包裝 v0.1.3（SKILL.md 與 v0.1.2 相同）
+
+每項檢查各執行一次。SKILL.md 是 v0.1.2 的發布檔。
+
+| 檢查項目 | 觀察結果 |
+| --- | --- |
+| 套件驗證 | `claude plugin validate --strict --profile directory .` 通過（Claude Code 2.1.322） |
+| Claude Code，從專案資料夾執行 `--plugin-dir .`，範例 1 | 以 plugin 版本 0.1.3 載入。只開啟指定的範例檔，未啟動代理，也未嘗試網路工具。三份報告寫在儲存庫外，git 狀態未變。報告寫入主機的工作階段暫存資料夾，回覆有說明該位置是臨時的 |
+| claude.ai 對話，上傳的 plugin，對附加的虛構範例執行 General Audit（測試 A） | 以版本 0.1.3 載入。只讀取附加檔案，未進行外部查詢，也未使用代理。有揭露模擬模式標示與自我檢查。產出三份報告檔，回覆為摘要。團隊獎項、未說明範圍的數字、過去的志工經歷，以及有期間的協調經歷都保留原意。回覆只給了報告的相對路徑，沒有說明檔案存放在哪裡、保存多久。未記錄網路搜尋設定 |
+| claude.ai 對話，要求只在對話呈現（測試 B） | 尚未測試 |
+| Cowork | 尚未測試 |
 
 ### 版本追溯
 

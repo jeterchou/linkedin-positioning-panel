@@ -35,7 +35,8 @@ Packaging for a possible listing in Anthropic's plugin directory. The two steps 
   - Three nonempty reports were written outside the repository, and the clone's git state was unchanged.
   - The host had a session-specific scratch folder, and the reports were written there. The reply said the location is temporary and suggested copying the reports to a permanent folder.
   - Planted cases (a team award, past volunteering, and figures without a period) were preserved in the revised copy.
-- The directory's own validation, security scan, and policy review have not been run. Behavior in claude.ai chat and Cowork remains untested.
+- claude.ai chat, one run (Test A): the plugin was uploaded via Customize → Plugins → Upload plugin and loaded at version 0.1.3. It was listed as "Linkedin positioning panel" with a generic icon, and SKILL.md's multi-line description was rewritten as a single line (SHA-256 `92cfa6c5c99898fc4548a1e5ee67be3cada176aa71479357cc1ee97f04af4cf3`; otherwise identical). A General Audit of an attached fictional sample read only the attached file and used no external lookup or agent. It disclosed simulated mode and self-check, produced three report files, and preserved the planted cases. The reply gave a relative report path without saying where files are kept or for how long. The web search setting was not recorded.
+- Not tested: claude.ai chat-only request (Test B) and Cowork. The directory's own validation, security scan, and policy review have not been run.
 
 ## v0.1.2 — Prepared 2026-11-12
 
