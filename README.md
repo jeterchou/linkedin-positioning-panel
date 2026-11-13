@@ -43,7 +43,7 @@ Having agent tools available does not count as authorization. Authorizing a veri
 
 | Path | Purpose |
 | --- | --- |
-| `.claude-plugin/plugin.json` | Plugin manifest: name, version, description, icon, and links |
+| `.claude-plugin/plugin.json` | Plugin manifest: name, version, description, icon, and links (documentation, support, privacy policy) |
 | Listing icon | A 1024 × 1024 PNG in the `.claude-plugin` folder, named by the `icon` field in `plugin.json` |
 | `skills/linkedin-positioning-panel/SKILL.md` | Canonical skill instructions |
 | `skills/linkedin-positioning-panel/LICENSE` | License copy kept with the skill folder |
@@ -51,6 +51,7 @@ Having agent tools available does not count as authorization. Authorizing a veri
 | `README.zh-TW.md` | Traditional Chinese documentation |
 | `LICENSE` | MIT terms and retained original copyright |
 | `CHANGELOG.md` | Release history |
+| `PRIVACY.md` | Privacy notice (English and Traditional Chinese) |
 | `examples/` | Fictional sample profiles for trying the skill |
 
 ## Quick start without installing a skill
@@ -154,7 +155,9 @@ Do not commit private inputs or generated personal reports to this public projec
 
 ## Data handling
 
-This plugin contains instructions only: one skill, with no hooks, scripts, MCP servers, or other code. It has no backend operated by the author, and the plugin itself sends nothing to the author.
+The full privacy notice is in [PRIVACY.md](PRIVACY.md). Issues on this repository are public: do not post private profiles or reports there.
+
+This plugin contains instructions only: one skill, with no hooks, scripts, MCP servers, or other code. It has no backend operated by the author, and the plugin does not automatically send anything to the author. Anything you send to the author yourself, such as an issue, is visible to the author.
 
 | What happens | Details |
 | --- | --- |

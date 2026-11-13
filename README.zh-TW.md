@@ -43,7 +43,7 @@ Skill 只開啟你指定、附加或貼上的來源；經授權的事實檢查�
 
 | 路徑 | 用途 |
 | --- | --- |
-| `.claude-plugin/plugin.json` | Plugin 設定檔：名稱、版本、說明、圖示與連結 |
+| `.claude-plugin/plugin.json` | Plugin 設定檔：名稱、版本、說明、圖示與連結（使用說明、支援、隱私權政策） |
 | 目錄圖示 | `.claude-plugin` 資料夾中的 1024 × 1024 PNG，由 `plugin.json` 的 `icon` 欄位指定 |
 | `skills/linkedin-positioning-panel/SKILL.md` | 核心 Skill 指令 |
 | `skills/linkedin-positioning-panel/LICENSE` | 隨 Skill 資料夾保留的授權條款副本 |
@@ -51,6 +51,7 @@ Skill 只開啟你指定、附加或貼上的來源；經授權的事實檢查�
 | `README.zh-TW.md` | 繁體中文使用說明 |
 | `LICENSE` | MIT 條款及保留的原始版權聲明 |
 | `CHANGELOG.md` | 版本更新紀錄 |
+| `PRIVACY.md` | 隱私權說明（英文與繁體中文） |
 | `examples/` | 供試用的虛構範例個人檔案 |
 
 ## 不安裝 Skill 的快速測試方式
@@ -154,7 +155,9 @@ claude.ai 對話已測試一次（見「測試狀態」）。Cowork **尚未測�
 
 ## 資料處理
 
-本 plugin 只包含指令：一個 Skill，沒有 hooks、腳本、MCP 伺服器或其他程式碼。作者沒有營運任何後端，plugin 本身也不會傳送任何資料給作者。
+完整的隱私權說明請見 [PRIVACY.md](PRIVACY.md)。本儲存庫的 Issues 是公開的，請勿在其中張貼私人個人檔案或報告。
+
+本 plugin 只包含指令：一個 Skill，沒有 hooks、腳本、MCP 伺服器或其他程式碼。作者沒有營運任何後端，plugin 也不會自動傳送任何資料給作者。你主動提供給作者的內容（例如 issue）則會被作者看到。
 
 | 處理環節 | 說明 |
 | --- | --- |

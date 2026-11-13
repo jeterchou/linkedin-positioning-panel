@@ -11,6 +11,8 @@ Packaging for a possible listing in Anthropic's plugin directory. The two steps 
 
 - `.claude-plugin/plugin.json` manifest: name `linkedin-positioning-panel`, version `0.1.3`, MIT license, and homepage and repository links. The description states that the plugin is not affiliated with or endorsed by LinkedIn.
 - `examples/` with two fictional sample profiles, in English and Traditional Chinese.
+- `PRIVACY.md`, a privacy notice in English and Traditional Chinese. It covers which personal data is read, processing under the user's Claude account, report files and host-dependent retention, optional external lookups, and the absence of an author backend (with usage statistics the directory may show the author if listed). It also warns against posting private material in public Issues.
+- `plugin.json` fields for the directory listing: `documentationUrl` (README), `supportUrl` (Issues), and `privacyPolicyUrl` (PRIVACY.md on `main`). The PRIVACY.md URL resolves only after this change is merged to `main`.
 - A proposed 1024 × 1024 PNG listing icon with no third-party marks, in the `.claude-plugin` folder and named by the `icon` field in `plugin.json`. The documentation does not spell out the image's path. When the directory portal validated commit `c77fe0d`, it reported a policy hold (`UNREAD_ASSET_REFERENCED`) for each of the three text files that named it.
 - README sections (English and Traditional Chinese):
   - loading the repository as a plugin, started from inside the repository folder so that `examples/` paths resolve;
@@ -24,7 +26,7 @@ Packaging for a possible listing in Anthropic's plugin directory. The two steps 
 ### Not decided
 
 - Listing icon: a proposed icon is included. The official plugin manifest reference documents an `icon` field that takes the path of an image file inside the plugin. Size limits (512 to 2048 px, under 2 MB, no SVG or WebP) and the rule that an icon is taken only the first time the plugin is saved or submitted appear only in the `claude plugin validate` output of Claude Code 2.1.322; they are unconfirmed. Confirm the icon before the plugin is first saved in the developer portal.
-- Privacy policy link: the plugin manifest supports `privacyPolicyUrl`. Whether the directory requires one for an instructions-only plugin is unconfirmed.
+- Privacy policy link: added after the developer portal's compliance step asked the developer to confirm that the plugin's privacy policy accurately describes its data handling.
 
 ### Checks (fictional data, one run each)
 
