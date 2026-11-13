@@ -10,7 +10,7 @@ LinkedIn Positioning Panel is an instructions-only Claude plugin. It contains on
 
 - **Only what you supply for the review you request.** The skill opens only sources you name, attach, or paste in the conversation, such as a LinkedIn Profile PDF export, pasted profile text, screenshots, or a job description. It does not open other files in the same folder unless you approve them.
 - **Personal data.** These sources normally contain personal data about you, such as your name, employment history, and achievements. They can also contain information about other people, such as names in recommendations. Supply only what you are entitled to share and need reviewed.
-- **No other data.** The skill does not read Claude's memory, your chat history, or conversation summaries. It does not build a profile of you across sessions.
+- **Context the host provides.** The skill does not instruct Claude to search or retrieve Claude's memory, your chat history, or conversation summaries, and it does not build a profile of you across sessions. Your Claude application may still include such context in a conversation on its own, depending on your settings. That context is handled by the application under your account's terms, not by this plugin.
 
 ## How the content is processed
 
@@ -33,7 +33,8 @@ LinkedIn Positioning Panel is an instructions-only Claude plugin. It contains on
 
 ## What the author receives
 
-- **No personal data or conversation content.** The plugin has no backend and sends nothing to the author. The author never receives your profile, your reports, or your conversations.
+- **Nothing sent automatically.** The plugin has no backend and does not automatically send your profile, your reports, or your conversations to the author.
+- **What you choose to share.** If you contact the author, for example by opening a GitHub issue, the author receives whatever you include. For a public issue, so does anyone who can view the repository. Do not include private profiles, reports, or contact details.
 - **Usage statistics, if listed.** If the plugin is listed in Anthropic's plugin directory, Anthropic's developer portal may show the author usage statistics, such as install counts, versions, how often the skill runs, and error rates. Anthropic determines what those statistics include.
 
 ## Support and issues
@@ -55,7 +56,7 @@ LinkedIn Positioning Panel 是只包含指令的 Claude plugin：內含一個 Sk
 
 - **只讀取你為所要求的審查而提供的資料。**Skill 只開啟你在對話中指定、附加或貼上的來源，例如 LinkedIn Profile PDF、貼上的個人檔案文字、截圖或職缺描述。除非你同意，不會開啟同一資料夾中的其他檔案。
 - **個人資料。**這些來源通常包含你的個人資料，例如姓名、工作經歷與成就，也可能包含他人的資訊，例如推薦文中的姓名。請只提供你有權分享、且需要審查的內容。
-- **不讀取其他資料。**Skill 不讀取 Claude 的記憶、你的對話紀錄或對話摘要，也不會跨工作階段建立關於你的檔案。
+- **主機提供的上下文。**Skill 不會指示 Claude 主動搜尋或擷取 Claude 的記憶、你的對話紀錄或對話摘要，也不會跨工作階段建立關於你的檔案。依你的設定，Claude 應用程式仍可能自行把這類上下文帶入對話；這類上下文由應用程式依你帳號的條款處理，不屬於本 plugin 的處理範圍。
 
 ## 內容的處理方式
 
@@ -78,7 +79,8 @@ LinkedIn Positioning Panel 是只包含指令的 Claude plugin：內含一個 Sk
 
 ## 作者會收到什麼
 
-- **不會收到個人資料或對話內容。**本 plugin 沒有後端，不會傳送任何資料給作者。作者不會收到你的個人檔案、報告或對話。
+- **不會自動傳送。**本 plugin 沒有後端，不會自動把你的個人檔案、報告或對話傳送給作者。
+- **你主動提供的資料。**如果你主動聯絡作者，例如在 GitHub 開 issue，作者會收到你提供的所有內容；公開的 issue 則任何能檢視本儲存庫的人都看得到。請勿附上私人個人檔案、報告或聯絡資訊。
 - **上架後的使用統計。**如果本 plugin 在 Anthropic 的 plugin 目錄上架，Anthropic 的開發者入口網站可能向作者顯示使用統計，例如安裝數、版本、Skill 執行次數與錯誤率。統計包含哪些內容，由 Anthropic 決定。
 
 ## 支援與問題回報

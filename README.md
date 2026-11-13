@@ -157,7 +157,7 @@ Do not commit private inputs or generated personal reports to this public projec
 
 The full privacy notice is in [PRIVACY.md](PRIVACY.md). Issues on this repository are public: do not post private profiles or reports there.
 
-This plugin contains instructions only: one skill, with no hooks, scripts, MCP servers, or other code. It has no backend operated by the author, and the plugin itself sends nothing to the author.
+This plugin contains instructions only: one skill, with no hooks, scripts, MCP servers, or other code. It has no backend operated by the author, and the plugin does not automatically send anything to the author. Anything you send to the author yourself, such as an issue, is visible to the author.
 
 | What happens | Details |
 | --- | --- |
