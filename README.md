@@ -106,7 +106,7 @@ The repository folder is a git repository. If you name no output location, the s
 
 Skills in a plugin also load in claude.ai chat and Cowork. Until a directory listing exists, add the plugin from a zip of the plugin folder: **Customize → Plugins → Add → Upload plugin**. Skills run in Claude's code sandbox there, so **Code execution and file creation** must be on under Settings → Capabilities.
 
-When the plugin is uploaded this way, claude.ai rewrites the multi-line `description` in SKILL.md's front matter as a single line. The SKILL.md copy on your account therefore has a different SHA-256 from the repository file, although the rest of the content is identical. In one test, the uploaded plugin was listed as "Linkedin positioning panel", not by its `displayName`, with a generic icon.
+In one upload test, the SKILL.md SHA-256 that the skill reported in its audit (`92cfa6c5c99898fc4548a1e5ee67be3cada176aa71479357cc1ee97f04af4cf3`) matched the repository file with the multi-line `description` in its front matter rewritten as a single line; the rest was identical. This was observed once and is not established as fixed platform behavior. In the same test, the plugin page listed the plugin as "Linkedin positioning panel", not by its `displayName`, with a generic icon.
 
 claude.ai chat was tested once (see Test status). Cowork has **not been tested**.
 
@@ -176,19 +176,35 @@ Never invent or upgrade job titles, employers, dates, responsibilities, team siz
 
 ## Test status
 
-All tests below used fictional profiles only (an English two-column PDF and Chinese pasted text) in private, temporary projects. They ran in Claude Code 2.1.322 on Linux in non-interactive mode (`claude -p`), one run per case. The host reported the model; it was not independently established. Results from one revision are not counted as passes for another.
+All tests used fictional data only, in private, temporary projects or accounts, one run per case. Unless a row says otherwise, they ran in Claude Code 2.1.322 on Linux in non-interactive mode (`claude -p`), using an English two-column PDF and Chinese pasted text. The v0.1.3 packaging checks instead used the Markdown samples in `examples/`, and one of them ran in claude.ai chat on the web, not in Claude Code. Where the host reported a model, it was not independently established. Results from one revision are not counted as passes for another.
 
 ### Plugin packaging v0.1.3 (SKILL.md unchanged from v0.1.2)
 
-One run per check. SKILL.md is the v0.1.2 release file.
+One run per check. SKILL.md is the v0.1.2 release file. The environment is named in each row.
 
 | Check | Observed result |
 | --- | --- |
-| Package validation | `claude plugin validate --strict --profile directory .` passes (Claude Code 2.1.322) |
-| Claude Code, `--plugin-dir .` from the repository folder, example 1 | Loaded at plugin version 0.1.3. Only the named sample file was opened, no agents were launched, and no web tool was attempted. Three reports were written outside the repository, and git state was unchanged. The host's session scratch folder was used, and the reply said it is temporary |
-| claude.ai chat, uploaded plugin, General Audit of an attached fictional sample (Test A) | Loaded at version 0.1.3. Only the attached file was read, and no external lookup or agent was used. The simulated-mode label and the self-check were disclosed. Three report files were produced, and the reply was a summary. Team award, unscoped figures, past volunteering, and dated coordination were preserved. The reply gave a relative report path without saying where files are kept or for how long. The web search setting was not recorded |
+| Package validation (Claude Code 2.1.322, Linux) | `claude plugin validate --strict --profile directory .` passes |
+| Claude Code 2.1.322 (Linux, `claude -p`), `--plugin-dir .` from the repository folder, README example 1 with the Markdown sample | Loaded at plugin version 0.1.3. Only the named sample file was opened, no agents were launched, and no web tool was attempted. Three reports were written outside the repository, and git state was unchanged. The host's session scratch folder was used, and the reply said it is temporary |
+| claude.ai chat (web), uploaded plugin, General Audit of the attached Markdown sample (Test A) | Behaved as expected on every item checked; see the evidence table below for what each finding rests on |
 | claude.ai chat, chat-only request (Test B) | Not tested |
 | Cowork | Not tested |
+
+#### claude.ai chat Test A: evidence by source
+
+| Item | Result | Evidence |
+| --- | --- | --- |
+| Plugin installed | The plugin page showed version v0.1.3, no connectors, "adds only instructions to Claude", the name "Linkedin positioning panel", and a generic icon | Interface: plugin page |
+| Skill loaded | The run log showed "Loaded skill linkedin-positioning-panel" | Interface: run log |
+| Loaded content | The audit reported SKILL.md SHA-256 `92cfa6c5c99898fc4548a1e5ee67be3cada176aa71479357cc1ee97f04af4cf3`. Reconstruction showed this equals the repository file with only the description rewritten as one line. This is consistent with the uploaded v0.1.3 plugin. It does not show whether an older copy on the account was removed | Report self-statement, checked by reconstruction |
+| Files and commands | The run log showed three reports created and shared, and two commands run: checking git status and the output folder, and confirming that the reports exist and are nonempty | Interface: run log |
+| Source scope | The audit states that only the attached file was read. The run log shows no other file or web step, but its summary may not list every read | Report self-statement; interface consistent |
+| External lookups and agents | The audit states that none were used, and the run log shows none | Report self-statement; interface consistent |
+| Execution label and self-check | The exact simulated-mode label and the self-check labeling appear in the reports and the reply | Document review |
+| Fact preservation | The team award stays a team award, "600 hours" has no added period, the 18% figure keeps "contributed to", past volunteering is not labeled "former", and coordination stays dated 2021–2022 | Document review |
+| Minor interpretations | About adds "with a focus on demand planning", drawn from a three-item Skills list. The analysis calls the award "internal", an inference from its name, in sections labeled as inference | Document review |
+| Delivery wording | The reply gave a relative report path without saying where the files are kept or for how long | Document review |
+| Not confirmable | Model and app version, the complete list of file reads, and the web search setting (not recorded) | — |
 
 ### Version traceability
 

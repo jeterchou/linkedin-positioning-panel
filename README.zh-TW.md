@@ -106,7 +106,7 @@ claude --plugin-dir .
 
 Plugin 中的 Skill 也會在 claude.ai 對話與 Cowork 中載入。上架前，請用 plugin 資料夾的壓縮檔加入帳號：**Customize → Plugins → Add → Upload plugin**。Skill 在那裡的程式碼沙箱中執行，因此必須在 Settings → Capabilities 開啟 **Code execution and file creation**。
 
-用這種方式上傳時，claude.ai 會把 SKILL.md 開頭設定區中多行的 `description` 改成單行。因此帳號中的 SKILL.md 副本，SHA-256 會和儲存庫中的檔案不同，但其餘內容完全相同。在一次測試中，上傳的 plugin 顯示名稱為「Linkedin positioning panel」，沒有使用 `displayName`，圖示也是通用圖示。
+在一次上傳測試中，Skill 在審查報告中自行回報的 SKILL.md SHA-256（`92cfa6c5c99898fc4548a1e5ee67be3cada176aa71479357cc1ee97f04af4cf3`），等於把儲存庫檔案開頭設定區中多行的 `description` 改成單行後的結果，其餘內容完全相同。這只是單次觀察，不能確定是平台的固定行為。同一次測試中，plugin 頁面顯示的名稱是「Linkedin positioning panel」，沒有使用 `displayName`，圖示也是通用圖示。
 
 claude.ai 對話已測試一次（見「測試狀態」）。Cowork **尚未測試**。
 
@@ -176,19 +176,35 @@ claude.ai 對話已測試一次（見「測試狀態」）。Cowork **尚未測�
 
 ## 測試狀態
 
-以下測試只使用虛構的個人檔案（一份英文雙欄 PDF 與一份中文貼上文字），在私人、臨時的專案中執行。環境為 Linux 上的 Claude Code 2.1.322 非互動模式（`claude -p`），每個案例各執行一次。模型由主機回報，未經獨立確認。一個版本的結果不計為另一個版本的通過。
+所有測試只使用虛構資料，在私人、臨時的專案或帳號中進行，每個案例各執行一次。除非該列另有註明，環境都是 Linux 上的 Claude Code 2.1.322 非互動模式（`claude -p`），使用一份英文雙欄 PDF 與一份中文貼上文字。v0.1.3 的包裝檢查則改用 `examples/` 中的 Markdown 範例，其中一項是在網頁版 claude.ai 對話中執行，不是 Claude Code。主機回報的模型未經獨立確認。一個版本的結果不計為另一個版本的通過。
 
 ### Plugin 包裝 v0.1.3（SKILL.md 與 v0.1.2 相同）
 
-每項檢查各執行一次。SKILL.md 是 v0.1.2 的發布檔。
+每項檢查各執行一次。SKILL.md 是 v0.1.2 的發布檔。各列分別註明執行環境。
 
 | 檢查項目 | 觀察結果 |
 | --- | --- |
-| 套件驗證 | `claude plugin validate --strict --profile directory .` 通過（Claude Code 2.1.322） |
-| Claude Code，從專案資料夾執行 `--plugin-dir .`，範例 1 | 以 plugin 版本 0.1.3 載入。只開啟指定的範例檔，未啟動代理，也未嘗試網路工具。三份報告寫在儲存庫外，git 狀態未變。報告寫入主機的工作階段暫存資料夾，回覆有說明該位置是臨時的 |
-| claude.ai 對話，上傳的 plugin，對附加的虛構範例執行 General Audit（測試 A） | 以版本 0.1.3 載入。只讀取附加檔案，未進行外部查詢，也未使用代理。有揭露模擬模式標示與自我檢查。產出三份報告檔，回覆為摘要。團隊獎項、未說明範圍的數字、過去的志工經歷，以及有期間的協調經歷都保留原意。回覆只給了報告的相對路徑，沒有說明檔案存放在哪裡、保存多久。未記錄網路搜尋設定 |
+| 套件驗證（Claude Code 2.1.322，Linux） | `claude plugin validate --strict --profile directory .` 通過 |
+| Claude Code 2.1.322（Linux，`claude -p`），從專案資料夾執行 `--plugin-dir .`，以 Markdown 範例執行 README 範例 1 | 以 plugin 版本 0.1.3 載入。只開啟指定的範例檔，未啟動代理，也未嘗試網路工具。三份報告寫在儲存庫外，git 狀態未變。報告寫入主機的工作階段暫存資料夾，回覆有說明該位置是臨時的 |
+| claude.ai 對話（網頁版），上傳的 plugin，對附加的 Markdown 範例執行 General Audit（測試 A） | 檢查的每一項都符合預期；各項結論的依據見下方證據表 |
 | claude.ai 對話，要求只在對話呈現（測試 B） | 尚未測試 |
 | Cowork | 尚未測試 |
+
+#### claude.ai 對話測試 A：證據來源
+
+| 項目 | 結果 | 證據 |
+| --- | --- | --- |
+| Plugin 安裝 | plugin 頁面顯示版本 v0.1.3、沒有連接器、「僅新增給 Claude 的指示」、名稱「Linkedin positioning panel」與通用圖示 | 介面：plugin 頁面 |
+| Skill 載入 | 執行紀錄顯示「已載入技能 linkedin-positioning-panel」 | 介面：執行紀錄 |
+| 載入的內容 | 審查報告回報 SKILL.md SHA-256 為 `92cfa6c5c99898fc4548a1e5ee67be3cada176aa71479357cc1ee97f04af4cf3`。經重建核對，這等於只把 description 改成單行的儲存庫檔案，與上傳的 v0.1.3 plugin 一致。但這無法證明帳號中較舊的副本已被移除 | 報告自述，經重建核對 |
+| 檔案與指令 | 執行紀錄顯示建立並分享三份報告，並執行兩個指令：檢查 git 狀態與輸出資料夾，以及確認報告存在且有內容 | 介面：執行紀錄 |
+| 來源範圍 | 報告表示只讀取附加檔案。執行紀錄沒有顯示其他檔案或網路步驟，但紀錄摘要不一定列出每次讀取 | 報告自述；介面紀錄一致 |
+| 外部查詢與代理 | 報告表示都沒有使用，執行紀錄也沒有顯示 | 報告自述；介面紀錄一致 |
+| 執行方式標示與自我檢查 | 報告與回覆都完整使用模擬模式的固定標示，並標明為自我檢查 | 文件檢閱 |
+| 事實保留 | 團隊獎項維持團隊歸屬，「600 hours」未加期間，18% 保留「contributed to」，過去的志工經歷沒有標為「former」，協調經歷維持 2021–2022 | 文件檢閱 |
+| 輕微推論 | About 加了「with a focus on demand planning」，是從三項技能清單延伸的說法。分析文字把獎項稱為「internal」，這是從獎項名稱推論，出現在標示為推論的段落 | 文件檢閱 |
+| 交付說明 | 回覆只給了報告的相對路徑，沒有說明檔案存放位置與保存期限 | 文件檢閱 |
+| 無法確認 | 模型與 app 版本、完整的檔案讀取清單、網路搜尋設定（未記錄） | — |
 
 ### 版本追溯
 

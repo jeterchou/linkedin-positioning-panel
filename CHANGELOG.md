@@ -26,16 +26,21 @@ Packaging for a possible listing in Anthropic's plugin directory. The two steps 
 - Listing icon: a proposed icon is included. The official plugin manifest reference documents an `icon` field that takes the path of an image file inside the plugin. Size limits (512 to 2048 px, under 2 MB, no SVG or WebP) and the rule that an icon is taken only the first time the plugin is saved or submitted appear only in the `claude plugin validate` output of Claude Code 2.1.322; they are unconfirmed. Confirm the icon before the plugin is first saved in the developer portal.
 - Privacy policy link: the plugin manifest supports `privacyPolicyUrl`. Whether the directory requires one for an instructions-only plugin is unconfirmed.
 
-### Checks (Claude Code 2.1.322, Linux, one run)
+### Checks (fictional data, one run each)
 
-- `claude plugin validate --profile directory .` passes. Before the icon was added, `--strict` failed only on the missing-icon warning; with the icon, `--strict` also passes.
-- README example 1 was run from a fresh clone, started inside the repository folder with `--plugin-dir .`. The run used an isolated configuration with skill sync off, so this plugin's skill was the only one of its name.
+- Claude Code 2.1.322, Linux: `claude plugin validate --profile directory .` passes. Before the icon was added, `--strict` failed only on the missing-icon warning; with the icon, `--strict` also passes.
+- Claude Code 2.1.322, Linux, `claude -p`: README example 1 was run with the Markdown sample from a fresh clone, started inside the repository folder with `--plugin-dir .`. The run used an isolated configuration with skill sync off, so this plugin's skill was the only one of its name.
   - The skill loaded as `linkedin-positioning-panel:linkedin-positioning-panel`, at plugin version 0.1.3.
   - Only the named sample file was opened. No agents were launched, and no web tool was attempted (web tools were not allowed).
   - Three nonempty reports were written outside the repository, and the clone's git state was unchanged.
   - The host had a session-specific scratch folder, and the reports were written there. The reply said the location is temporary and suggested copying the reports to a permanent folder.
   - Planted cases (a team award, past volunteering, and figures without a period) were preserved in the revised copy.
-- claude.ai chat, one run (Test A): the plugin was uploaded via Customize → Plugins → Upload plugin and loaded at version 0.1.3. It was listed as "Linkedin positioning panel" with a generic icon, and SKILL.md's multi-line description was rewritten as a single line (SHA-256 `92cfa6c5c99898fc4548a1e5ee67be3cada176aa71479357cc1ee97f04af4cf3`; otherwise identical). A General Audit of an attached fictional sample read only the attached file and used no external lookup or agent. It disclosed simulated mode and self-check, produced three report files, and preserved the planted cases. The reply gave a relative report path without saying where files are kept or for how long. The web search setting was not recorded.
+- claude.ai chat on the web, Test A: the plugin was uploaded via Customize → Plugins → Upload plugin, and a General Audit was run on the attached Markdown sample. Evidence by source:
+  - **Interface (plugin page):** version v0.1.3, no connectors, instructions only, named "Linkedin positioning panel", generic icon.
+  - **Interface (run log):** "Loaded skill linkedin-positioning-panel"; three reports created and shared; two commands run; no web step shown.
+  - **Report self-statements:** only the attached file was read, and no external lookup or agent was used. The audit reported SKILL.md SHA-256 `92cfa6c5c99898fc4548a1e5ee67be3cada176aa71479357cc1ee97f04af4cf3`, which reconstruction showed equals the repository file with only the description rewritten as one line. This was observed once and is not established as platform behavior, and it does not show that an older copy on the account was removed.
+  - **Document review:** the simulated-mode label and the self-check were disclosed, and the planted cases were preserved. There were two minor interpretations: "with a focus on demand planning", drawn from a Skills list, and the award called "internal", an inference labeled as such. The reply gave a relative report path without saying where files are kept or for how long.
+  - **Not confirmable:** model and app version, the complete file-read list, and the web search setting (not recorded).
 - Not tested: claude.ai chat-only request (Test B) and Cowork. The directory's own validation, security scan, and policy review have not been run.
 
 ## v0.1.2 — Prepared 2026-11-12
