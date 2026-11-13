@@ -11,6 +11,9 @@
   "repository": "https://github.com/jeterchou/linkedin-positioning-panel",
   "license": "MIT",
   "icon": "./.claude-plugin/icon.png",
+  "documentationUrl": "https://github.com/jeterchou/linkedin-positioning-panel#readme",
+  "supportUrl": "https://github.com/jeterchou/linkedin-positioning-panel/issues",
+  "privacyPolicyUrl": "https://github.com/jeterchou/linkedin-positioning-panel/blob/main/PRIVACY.md",
   "keywords": [
     "linkedin",
     "career",
