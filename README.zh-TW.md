@@ -2,7 +2,12 @@
 
 [English](README.md) | 繁體中文
 
-**v0.1.2 · 早期測試版**
+**v0.1.3 · Plugin 包裝版，尚未發布。** Skill 指令與 v0.1.2 早期測試版完全相同。
+
+| 步驟 | 狀態 |
+| --- | --- |
+| GitHub 發布 v0.1.3 | 尚未發布（最新已發布版本為 v0.1.2） |
+| Anthropic plugin 目錄上架 | 尚未送審 |
 
 運用人工智慧協助審查 LinkedIn 個人檔案的 Skill，著重專業定位、有依據的文字修訂，以及個人、團隊與合作成果的清楚歸屬。適用於不同產業與職涯階段。
 
@@ -38,12 +43,15 @@ Skill 只開啟你指定、附加或貼上的來源；經授權的事實檢查�
 
 | 路徑 | 用途 |
 | --- | --- |
+| `.claude-plugin/plugin.json` | Plugin 設定檔：名稱、版本、說明、圖示與連結 |
+| `.claude-plugin/icon.png` | 預定的目錄圖示（1024 × 1024 PNG） |
 | `skills/linkedin-positioning-panel/SKILL.md` | 核心 Skill 指令 |
 | `skills/linkedin-positioning-panel/LICENSE` | 隨 Skill 資料夾保留的授權條款副本 |
 | `README.md` | 英文使用說明、測試狀態與致謝 |
 | `README.zh-TW.md` | 繁體中文使用說明 |
 | `LICENSE` | MIT 條款及保留的原始版權聲明 |
 | `CHANGELOG.md` | 版本更新紀錄 |
+| `examples/` | 供試用的虛構範例個人檔案 |
 
 ## 不安裝 Skill 的快速測試方式
 
@@ -76,6 +84,53 @@ Skill 只開啟你指定、附加或貼上的來源；經授權的事實檢查�
 
 執行 Target Role Audit 時，另提供目標職缺描述。使用者須具備目前有效的 Claude Code 存取方式，以及能執行相關操作的模型；模型與服務費用不包含在本專案授權內。最新載入方式請參閱 [Claude Code 官方 Skill 文件](https://code.claude.com/docs/en/skills)。
 
+## 以 Plugin 方式載入
+
+專案根目錄同時也是一個 Claude plugin：設定檔是 `.claude-plugin/plugin.json`，Skill 放在 `skills/`。本專案尚未在 Anthropic 的 plugin 目錄上架；上架前，請使用上方的複製安裝方式，或依本節方式載入。
+
+### Claude Code
+
+clone 本專案後，**在專案資料夾內**啟動 Claude Code，下方範例中的 `examples/` 路徑才會正確：
+
+```text
+git clone https://github.com/jeterchou/linkedin-positioning-panel
+cd linkedin-positioning-panel
+claude --plugin-dir .
+```
+
+以 plugin 方式載入時，Skill 的完整名稱是 `linkedin-positioning-panel:linkedin-positioning-panel`。在 Claude Code 2.1.322 的確認中，簡短指令 `/linkedin-positioning-panel` 也能載入。若另外安裝了同名 Skill，請使用完整名稱。
+
+專案資料夾本身是 git 儲存庫。若沒有指定輸出位置，Skill 不會把報告寫進這個資料夾；請見「輸出」一節。
+
+### claude.ai 對話與 Cowork
+
+Plugin 中的 Skill 也會在 claude.ai 對話與 Cowork 中載入。上架前，請用 plugin 資料夾的壓縮檔加入帳號：**Customize → Plugins → Add → Upload plugin**。Skill 在那裡的程式碼沙箱中執行，因此必須在 Settings → Capabilities 開啟 **Code execution and file creation**。
+
+在一次上傳測試中，Skill 在審查報告中自行回報的 SKILL.md SHA-256（`92cfa6c5c99898fc4548a1e5ee67be3cada176aa71479357cc1ee97f04af4cf3`），等於把儲存庫檔案開頭設定區中多行的 `description` 改成單行後的結果，其餘內容完全相同。這只是單次觀察，不能確定是平台的固定行為。同一次測試中，plugin 頁面顯示的名稱是「Linkedin positioning panel」，沒有使用 `displayName`，圖示也是通用圖示。
+
+claude.ai 對話已測試一次（見「測試狀態」）。Cowork **尚未測試**。
+
+## 範例提示
+
+範例使用 `examples/` 中的虛構個人檔案。實際使用時，請換成你自己的 Profile PDF 或貼上的文字。
+
+### 在 Claude Code 中（從專案資料夾啟動）
+
+1. 整體審查，採預設交付方式：
+   `/linkedin-positioning-panel 請對 examples/sample-profile-zh.md 執行 General Audit。`
+2. 目標職務審查，只在對話中呈現：
+   `/linkedin-positioning-panel 請依照這份職缺描述，對 examples/sample-profile-zh.md 執行 Target Role Audit：〔貼上職缺描述〕。結果只在對話呈現，不要寫檔。`
+3. 英文檔案，授權事實檢查代理並指定輸出位置：
+   `/linkedin-positioning-panel Perform a General Audit of examples/sample-profile-en.md. Save the reports to ~/private/linkedin-review/. I authorize one separate factual verifier agent.`
+
+### 在 claude.ai 對話或 Cowork 中
+
+本組範例採附加檔案或貼上文字，不依賴本機專案路徑。請從 GitHub 上的 `examples/` 下載範例檔，附加到對話中（或貼上文字），再用文字提出需求，例如：
+
+`請使用 LinkedIn Positioning Panel Skill，對附加的個人檔案執行 General Audit。只使用附加的檔案。`
+
+範例檔案刻意包含團隊獎項、過去的參與，以及未說明期間的數字。審查時應保留原本的寫法，不應改成個人得獎、目前職務，也不應自行假設期間。
+
 ## 輸出
 
 | 檔案 | 內容 |
@@ -97,6 +152,18 @@ Skill 只開啟你指定、附加或貼上的來源；經授權的事實檢查�
 
 不要將私人輸入資料或產出的個人報告提交到本公開專案。
 
+## 資料處理
+
+本 plugin 只包含指令：一個 Skill，沒有 hooks、腳本、MCP 伺服器或其他程式碼。作者沒有營運任何後端，plugin 本身也不會傳送任何資料給作者。
+
+| 處理環節 | 說明 |
+| --- | --- |
+| Claude 處理 | 你提供的個人檔案及其他內容，會作為對話的一部分傳給 Claude，依你 Claude 帳號的條款與資料設定處理。如果你授權使用代理，代理會在同一工作階段中取得授權範圍內的來源與草稿。 |
+| 報告寫檔 | 環境支援寫檔時，完整審查預設會把三份 Markdown 報告寫到「輸出」一節所述的位置，報告包含你的個人檔案內容與分析。保存期限由主機決定：雲端工作階段或暫存位置中的檔案可能被清除，需要保留時，請下載或複製到持久保存的位置。只在對話呈現時不寫報告檔。執行過程中，主機也可能在工作或暫存位置建立暫存檔，例如用來檢查 PDF 版面的頁面圖片。 |
+| 外部工具查詢 | 當你要求只使用提供的來源時，Skill 不會上網。否則，在你要求查證，或 Skill 判斷可取得的權威來源會實質影響審查時，它可能查核外部資訊。查詢只透過主機提供的網路搜尋或讀取工具進行，並會把雇主、獎項、證照名稱等搜尋字詞送到這些服務。若要避免查詢，請說明「只使用提供的來源，不要上網」。沒有這項指示時是否會主動查詢，**尚未測試**。 |
+| LinkedIn 網址 | 網址只作輔助來源。Skill 不要求密碼、Cookie 或工作階段權杖，也不繞過存取限制。若開啟網址，使用的是主機提供的工具。 |
+| 自有後端 | 沒有。 |
+
 ## 證據與審查原則
 
 個人檔案中的陳述不會自動成為已獨立證實的事實。Skill 分別追蹤履歷自述、使用者確認、外部佐證、推論及未知資訊，並另外記錄查證狀態。整體品牌、獎項、類別、譯名或簡稱不同時，須先釐清關係，才能判定是否矛盾。
@@ -109,7 +176,35 @@ Skill 只開啟你指定、附加或貼上的來源；經授權的事實檢查�
 
 ## 測試狀態
 
-以下測試只使用虛構的個人檔案（一份英文雙欄 PDF 與一份中文貼上文字），在私人、臨時的專案中執行。環境為 Linux 上的 Claude Code 2.1.322 非互動模式（`claude -p`），每個案例各執行一次。模型由主機回報，未經獨立確認。一個版本的結果不計為另一個版本的通過。
+所有測試只使用虛構資料，在私人、臨時的專案或帳號中進行，每個案例各執行一次。除非該列另有註明，環境都是 Linux 上的 Claude Code 2.1.322 非互動模式（`claude -p`），使用一份英文雙欄 PDF 與一份中文貼上文字。v0.1.3 的包裝檢查則改用 `examples/` 中的 Markdown 範例，其中一項是在網頁版 claude.ai 對話中執行，不是 Claude Code。主機回報的模型未經獨立確認。一個版本的結果不計為另一個版本的通過。
+
+### Plugin 包裝 v0.1.3（SKILL.md 與 v0.1.2 相同）
+
+每項檢查各執行一次。SKILL.md 是 v0.1.2 的發布檔。各列分別註明執行環境。
+
+| 檢查項目 | 觀察結果 |
+| --- | --- |
+| 套件驗證（Claude Code 2.1.322，Linux） | `claude plugin validate --strict --profile directory .` 通過 |
+| Claude Code 2.1.322（Linux，`claude -p`），從專案資料夾執行 `--plugin-dir .`，以 Markdown 範例執行 README 範例 1 | 以 plugin 版本 0.1.3 載入。只開啟指定的範例檔，未啟動代理，也未嘗試網路工具。三份報告寫在儲存庫外，git 狀態未變。報告寫入主機的工作階段暫存資料夾，回覆有說明該位置是臨時的 |
+| claude.ai 對話（網頁版），上傳的 plugin，對附加的 Markdown 範例執行 General Audit（測試 A） | 檢查的每一項都符合預期；各項結論的依據見下方證據表 |
+| claude.ai 對話，要求只在對話呈現（測試 B） | 尚未測試 |
+| Cowork | 尚未測試 |
+
+#### claude.ai 對話測試 A：證據來源
+
+| 項目 | 結果 | 證據 |
+| --- | --- | --- |
+| Plugin 安裝 | plugin 頁面顯示版本 v0.1.3、沒有連接器、「僅新增給 Claude 的指示」、名稱「Linkedin positioning panel」與通用圖示 | 介面：plugin 頁面 |
+| Skill 載入 | 執行紀錄顯示「已載入技能 linkedin-positioning-panel」 | 介面：執行紀錄 |
+| 載入的內容 | 審查報告回報 SKILL.md SHA-256 為 `92cfa6c5c99898fc4548a1e5ee67be3cada176aa71479357cc1ee97f04af4cf3`。經重建核對，這等於只把 description 改成單行的儲存庫檔案，與上傳的 v0.1.3 plugin 一致。但這無法證明帳號中較舊的副本已被移除 | 報告自述，經重建核對 |
+| 檔案與指令 | 執行紀錄顯示建立並分享三份報告，並執行兩個指令：檢查 git 狀態與輸出資料夾，以及確認報告存在且有內容 | 介面：執行紀錄 |
+| 來源範圍 | 報告表示只讀取附加檔案。執行紀錄沒有顯示其他檔案或網路步驟，但紀錄摘要不一定列出每次讀取 | 報告自述；介面紀錄一致 |
+| 外部查詢與代理 | 報告表示都沒有使用，執行紀錄也沒有顯示 | 報告自述；介面紀錄一致 |
+| 執行方式標示與自我檢查 | 報告與回覆都完整使用模擬模式的固定標示，並標明為自我檢查 | 文件檢閱 |
+| 事實保留 | 團隊獎項維持團隊歸屬，「600 hours」未加期間，18% 保留「contributed to」，過去的志工經歷沒有標為「former」，協調經歷維持 2021–2022 | 文件檢閱 |
+| 輕微推論 | About 加了「with a focus on demand planning」，是從三項技能清單延伸的說法。分析文字把獎項稱為「internal」，這是從獎項名稱推論，出現在標示為推論的段落 | 文件檢閱 |
+| 交付說明 | 回覆只給了報告的相對路徑，沒有說明檔案存放位置與保存期限 | 文件檢閱 |
+| 無法確認 | 模型與 app 版本、完整的檔案讀取清單、網路搜尋設定（未記錄） | — |
 
 ### 版本追溯
 
