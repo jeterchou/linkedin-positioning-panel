@@ -11,7 +11,7 @@ description: >-
 
 # LinkedIn Positioning Panel
 
-Revision: v0.1.4 candidate 1, prepared 2026-11-16 for private retesting; not released. Changes from the v0.1.2 workflow: state the sources before reading them and the report location before writing outside the working directory; one tool call per purpose without unnecessary shell syntax; prefer a private location known to persist and disclose when persistence is uncertain; no output-location checks in chat-only mode; declined permission prompts are not retried; stronger checks for negative current-status inferences in reviewer records, analysis, copy, self-checks, and the final response. Test results from v0.1.2 and earlier candidates do not validate this revision.
+Revision: local candidate "operations and delivery fixes c2", prepared 2026-11-16 for private retesting; not released, and its final version number is not decided. It builds on local candidate v0.1.4-c1 (SKILL.md SHA-256 21b4ebb5c5e0ce2a4621bc3bbbc2147b00788a8539dcb94c91ca3e542b5e8401). Changes from the v0.1.2 workflow: an opening statement of sources and planned delivery, with unknowns stated conditionally; the actual location and reason stated before any check of or write to it outside the working directory; one tool call per purpose without unnecessary shell syntax; prefer a private location known to persist and disclose when persistence is uncertain; no output-location checks in chat-only mode or before a missing input is supplied; declined permission prompts reported by the operation actually declined and not retried; stronger checks for negative current-status inferences in reviewer records, analysis, copy, self-checks, and the final response. Test results from v0.1.2 and earlier candidates do not validate this revision.
 
 Conduct a rigorous, evidence-based review of a LinkedIn profile using seven reviewer perspectives, then produce an accurate, ready-to-edit revision. Be candid and specific, never flattering by default. The purpose is to improve clarity, credible differentiation, discoverability through relevant language, and alignment with the user's stated career direction—not to predict hiring outcomes or manipulate LinkedIn ranking.
 
@@ -31,7 +31,9 @@ Stop and ask **one** concise question, without reading candidates or starting th
 
 When the question cannot be answered in this session (for example, non-interactive mode), end with the question; do not proceed on an assumed answer.
 
-**Say what you will read before reading it.** Before your first tool call, tell the user in one sentence which in-scope sources you will open. Do not open anything else.
+**Opening statement.** Before your first tool call, tell the user in one or two sentences which in-scope sources you will open and how you plan to deliver the reports (files or chat only). State anything you have not yet confirmed conditionally, not as fact. For example: "If this folder is a git repository, I will write the reports outside it and tell you the exact location before writing." Do not open anything else.
+
+If a required input is missing, ask your one question and stop. Do not call any tool, including tools to check a repository or plan an output location, until the user answers.
 
 Before substantive review:
 1. Inventory each source with a source ID, filename/type, supplied or retrieval date, and page/section/image locator. Record export date only if supplied; otherwise mark unknown. Do not treat the analysis date as the export date.
@@ -195,7 +197,7 @@ Recommended deliverables:
 
 For a complete audit, when filesystem writing is supported, **write the three reports by default**; the user does not need to ask for files. Skip writing only when the user asks for chat-only output (e.g., "only in chat," "don't write files," 「只在對話呈現」「不要寫檔」); then deliver the three reports as clearly separated Markdown sections in chat. In chat-only mode, do not check, list, or create any output location, including the home directory.
 
-**Explain before asking.** Before the first check of, or write to, any location outside the working directory, tell the user in one sentence where the reports will go and why (for example, because the working directory is a git repository). The permission prompts that follow should then match what the user was told.
+**State the location before using it.** After you choose a location outside the working directory, and before your first check of or write to it, tell the user the actual location and why you chose it (for example, because the working directory is a git repository). If you change the location, update the statement before you act on the new one. The permission prompts that follow should then match what the user was told.
 
 Choose the location in this order:
 1. **User-specified location:** use it. If it is inside a git working tree, write there only because the user chose it; do not stage, commit, or push.
@@ -204,13 +206,14 @@ Choose the location in this order:
 
 Never stage, commit, or push reports.
 
-**Write permission status.** When a location may be unavailable, record its status as exactly one of the following. Describe it in chat and reports only as what you observed:
+**Write permission status.** When a location may be unavailable, record its status as exactly one of the following, according to the operation that was actually declined or failed. Describe it in chat and reports only as what you observed:
 - **Write explicitly prohibited:** the host or a permission rule denied a write or directory-creation attempt for that location, or the user said not to write there. Do not try to get around a prohibition, whether by another tool, shell redirection, a different path to the same place, or a test write.
 - **Write attempted and failed:** a write was attempted and returned an error. Report the error as observed.
+- **Declined compound or unclear operation:** a declined command mixed reads, listings, and writes, or the host did not say which part caused the denial. Report exactly what was declined. Do not record it as a write prohibition.
 - **Only listing or reading was denied:** a directory listing, existence check, or read was denied, but no write was attempted. This does not show that writing is prohibited. Say only that the location could not be listed or checked. If writing there is not prohibited, you may attempt the write once.
 - **Not attempted:** say so; do not describe the location as blocked.
 
-**Declined permission prompts.** If the user declines a permission prompt, the host may pause and wait for the user. That pause is host behavior, not a step of this skill. When the conversation resumes, do not retry the declined action or a variant of it. Record the status as "Write explicitly prohibited," and continue with chat delivery unless the user names another location.
+**Declined permission prompts.** If the user declines a permission prompt, the host may pause and wait for the user. That pause is host behavior, not a step of this skill. When the conversation resumes, do not retry the declined operation or a variant of it, and do not try to get around the decision. Report the status according to the operation actually declined (see Write permission status). A declined read, listing, or unclear compound operation is not a declined write. After a declined write, you may conservatively deliver in chat; you need not try other locations automatically. If the user then names another location, use it under the normal permission flow.
 
 **Suggesting a location after chat delivery.** When reports were delivered in chat because no permitted location was available:
 - Suggest at least one location outside the repository first, such as a folder under the user's home directory.
@@ -221,7 +224,7 @@ The default directory is `linkedin-positioning-panel/<YYYY-MM-DD>-<HHMMSS>-<shor
 ### Tool use
 
 - **One purpose per call.** Use one tool call or command per purpose, and describe that purpose accurately. Do not bundle unrelated checks (inputs, hashes, dates, versions, other locations) into one command.
-- **Prefer dedicated file tools.** Use the host's file tools to read sources and to write reports. Writing a file creates its folder, so do not create folders with shell commands when a file tool can do it.
+- **Prefer dedicated file tools.** Use the host's file tools to read sources and to write reports. When the host's file-write tool creates parent folders automatically, prefer it to creating folders with shell commands. Do not assume that every host's file tool does so.
 - **Keep shell syntax simple.** When a shell command is needed, avoid command substitution, brace groups, chained conditionals, here-documents, and inline interpreter scripts if a simpler command or a dedicated tool works. Such syntax can trigger extra security warnings in permission prompts.
 - **Check outside locations only when needed.** Check a location outside the working directory only immediately before writing there, and never in chat-only mode.
 
