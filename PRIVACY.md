@@ -2,7 +2,7 @@
 
 English | [繁體中文](#隱私權說明--linkedin-positioning-panel)
 
-Last updated: 2026-11-26 · Applies to plugin version 0.1.3 and its bundled skill instructions. Changes to this notice are tracked in this repository's history.
+Last updated: 2026-11-26 · Applies to plugin version 0.1.5 and its bundled skill instructions. Changes to this notice are tracked in this repository's history.
 
 LinkedIn Positioning Panel is an instructions-only Claude plugin. It contains one skill (written instructions) and no code, hooks, scripts, MCP servers, or connectors. The author does not run any service for it. It is not affiliated with or endorsed by LinkedIn.
 
@@ -49,7 +49,7 @@ LinkedIn Positioning Panel is an instructions-only Claude plugin. It contains on
 
 [English](#privacy-notice--linkedin-positioning-panel) | 繁體中文
 
-更新日期：2026-11-26。適用於 plugin 版本 0.1.3 及其隨附的 Skill 指令。本說明的變更記錄在本儲存庫的歷史中。
+更新日期：2026-11-26。適用於 plugin 版本 0.1.5 及其隨附的 Skill 指令。本說明的變更記錄在本儲存庫的歷史中。
 
 LinkedIn Positioning Panel 是只包含指令的 Claude plugin：內含一個 Skill（文字指令），沒有程式碼、hooks、腳本、MCP 伺服器或連接器。作者沒有為它營運任何服務。本 plugin 不隸屬於 LinkedIn，也未獲其背書。
 

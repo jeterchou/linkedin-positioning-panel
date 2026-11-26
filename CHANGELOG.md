@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.1.5 — Submission candidate, unreleased
+
+Prepared 2026-11-26. No tag, release, merge, or directory submission is implied. This version distinguishes the revised skill from the previously uploaded v0.1.3 and a separate local v0.1.4 candidate, which is not incorporated here.
+
+### Changed
+
+- Carry forward this PR's explicit external-lookup authorization and bilingual privacy documentation.
+- Clarify that a URL plus “open it” / 「打開看看」 authorizes that page retrieval only. A URL alone still does not supply a complete profile snapshot; additional links, searches and substitute local files require their own scope.
+- Add six planned lookup-boundary cases to both READMEs, all marked not run. Earlier runtime results remain tied to the earlier revisions.
+- Align current manifest, skill revision, privacy scope and README version markers. The v0.1.3 entry below preserves the earlier packaging history.
+
 ## v0.1.3 — Plugin packaging, unreleased
 
 Packaging for a possible listing in Anthropic's plugin directory. The two steps are tracked separately:

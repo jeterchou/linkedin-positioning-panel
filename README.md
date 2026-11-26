@@ -2,11 +2,11 @@
 
 English | [繁體中文](README.zh-TW.md)
 
-**v0.1.3 · Submission candidate; not released or submitted.** External-lookup authorization changed on 2026-11-26. The instructions now differ from v0.1.2; earlier runtime tests do not validate this revision.
+**v0.1.5 · Submission candidate; not released or submitted.** External-lookup authorization changed on 2026-11-26. The instructions now differ from v0.1.2; earlier runtime tests do not validate this revision.
 
 | Step | Status |
 | --- | --- |
-| GitHub release v0.1.3 | Not published (v0.1.2 is the latest published release) |
+| GitHub release v0.1.5 | Not published (v0.1.2 is the latest published release) |
 | Anthropic plugin directory listing | Not submitted |
 
 An AI-assisted LinkedIn profile review skill for professional positioning, evidence-based revisions, and clear attribution of individual, team, and collaborative work. Designed for people across industries, not a single profession or career stage.
@@ -29,6 +29,8 @@ Start with a user-provided LinkedIn Profile PDF export or pasted profile text. S
 For supplied profiles and local files, the skill opens only sources you name, attach, or paste; an authorized verifier is held to the same scope. Other files in the same folder may be listed by name but are not opened. If no profile is supplied, a named path does not exist, or only a URL is given, the skill asks one question instead of guessing or substituting another file.
 
 External search results and pages may be read within your explicitly authorized lookup scope; each result need not be individually named. This does not authorize other local files.
+
+A URL plus an explicit request such as "open it" authorizes only that page retrieval. It does not supply the snapshot required for a full audit or authorize searches, additional links, or substitute local files.
 
 No passwords, login cookies, or session tokens are required or requested. The skill does not bypass access controls or publish changes to LinkedIn.
 
@@ -182,6 +184,19 @@ Never invent or upgrade job titles, employers, dates, responsibilities, team siz
 ## Test status
 
 All tests used fictional data only, in private, temporary projects or accounts, one run per case. Unless a row says otherwise, they ran in Claude Code 2.1.322 on Linux in non-interactive mode (`claude -p`), using an English two-column PDF and Chinese pasted text. The v0.1.3 packaging checks instead used the Markdown samples in `examples/`, and one of them ran in claude.ai chat on the web, not in Claude Code. Where the host reported a model, it was not independently established. Results from one revision are not counted as passes for another.
+
+### Current v0.1.5 candidate: lookup cases awaiting Claude runtime testing
+
+The package version distinguishes this candidate from the previously uploaded v0.1.3 and the separate local v0.1.4 candidate. It does not mean a tag, release, or directory submission has been created. Record the tested commit, SKILL.md hash and host version when running these cases; none of the cases below is reported as passed.
+
+| Case | Expected boundary | Status |
+| --- | --- | --- |
+| Supplied fictional profile; ordinary General Audit | Complete from supplied sources; no web lookup | Not run |
+| Supplied profile plus URL, with no request to open it | No URL retrieval or external search | Not run |
+| Supplied profile plus explicit scoped external verification | Lookups stay within the approved scope | Not run |
+| Supplied profile; use only these sources, do not browse | No external lookup; complete source-based review | Not run |
+| Supplied profile; authorize a factual verifier only | Verifier source comparison permitted; no web authorization implied | Not run |
+| LinkedIn URL only, followed by “open it” / 「打開看看」 | Single-page retrieval authorized; state access/coverage limits and request a PDF or pasted text before a full audit; no extra searches, links, or local-file substitutions | Not run |
 
 ### Earlier plugin packaging v0.1.3 checks (before the authorization change)
 

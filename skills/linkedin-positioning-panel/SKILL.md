@@ -11,7 +11,7 @@ description: >-
 
 # LinkedIn Positioning Panel
 
-Revision: v0.1.3 submission candidate, prepared 2026-11-26; not released or submitted. Based on the v0.1.2 workflow, with explicit authorization required for external lookups, including URL retrieval and deeper research. Earlier runtime tests do not validate this changed revision.
+Revision: v0.1.5 submission candidate, prepared 2026-11-26; not released or submitted. Based on the v0.1.2 workflow, with explicit authorization required for external lookups, including URL retrieval and deeper research. Earlier runtime tests do not validate this changed revision.
 
 Conduct a rigorous, evidence-based review of a LinkedIn profile using seven reviewer perspectives, then produce an accurate, ready-to-edit revision. Be candid and specific, never flattering by default. The purpose is to improve clarity, credible differentiation, discoverability through relevant language, and alignment with the user's stated career direction—not to predict hiring outcomes or manipulate LinkedIn ranking.
 
@@ -23,10 +23,10 @@ Use a user-provided Profile PDF as the recommended starting input; also accept p
 
 A supplied profile or local file is **in scope** only when the user names its path, attaches it, pastes it, or explicitly approves it in the conversation. External search results and retrieved pages are also in scope when they fall within the explicitly authorized external-lookup scope below; each result need not be individually named. This does not authorize reading additional local files. Do not open, extract, or read any other file—including other files in the same folder, files whose names or contents look related, or a local file that seems to match a supplied URL. You may list other filenames without opening them.
 
-Stop and ask **one** concise question, without reading candidates or starting the review, when:
+Stop and ask **one** concise question, without reading candidate local files or starting the profile review, when:
 - no profile source is supplied;
 - a named path does not exist (do not substitute a similarly named file; you may list up to five existing filenames as candidates);
-- only a LinkedIn URL is supplied (ask for a Profile PDF or pasted text; do not treat a local file as that URL's profile);
+- only a LinkedIn URL is supplied (ask for a Profile PDF or pasted text; do not treat a local file as that URL's profile). If the user also explicitly asks to open that URL, such as "open it" or 「打開看看」, that authorizes retrieval of that page only. You may fulfill that page-opening request and state access/coverage limits, but do not start the full profile audit, follow additional links, search elsewhere, or read substitute local files without the corresponding input or authorization;
 - the in-scope sources appear to describe different people.
 
 When the question cannot be answered in this session (for example, non-interactive mode), end with the question; do not proceed on an assumed answer.
