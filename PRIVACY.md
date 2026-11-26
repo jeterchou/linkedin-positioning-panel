@@ -2,13 +2,13 @@
 
 English | [繁體中文](#隱私權說明--linkedin-positioning-panel)
 
-Effective: 2026-11-13 · Applies to plugin version 0.1.3 and the skill instructions released as v0.1.2. Changes to this notice are tracked in this repository's history.
+Draft updated: 2026-11-26 · Applies to the unreleased plugin v0.1.3 submission candidate and its revised skill instructions. Not yet effective on main. Changes to this notice are tracked in this repository's history.
 
 LinkedIn Positioning Panel is an instructions-only Claude plugin. It contains one skill (written instructions) and no code, hooks, scripts, MCP servers, or connectors. The author does not run any service for it. It is not affiliated with or endorsed by LinkedIn.
 
 ## What the plugin reads
 
-- **Only what you supply for the review you request.** The skill opens only sources you name, attach, or paste in the conversation, such as a LinkedIn Profile PDF export, pasted profile text, screenshots, or a job description. It does not open other files in the same folder unless you approve them.
+- **Only what you supply for the review you request.** For supplied profiles and local files, the skill opens only sources you name, attach, or paste in the conversation, such as a LinkedIn Profile PDF export, pasted profile text, screenshots, or a job description. It does not open other files in the same folder unless you approve them. External search results and pages may be read within an explicitly authorized lookup scope; each result need not be individually named.
 - **Personal data.** These sources normally contain personal data about you, such as your name, employment history, and achievements. They can also contain information about other people, such as names in recommendations. Supply only what you are entitled to share and need reviewed.
 - **Context the host provides.** The skill does not instruct Claude to search or retrieve Claude's memory, your chat history, or conversation summaries, and it does not build a profile of you across sessions. Your Claude application may still include such context in a conversation on its own, depending on your settings. That context is handled by the application under your account's terms, not by this plugin.
 
@@ -22,13 +22,14 @@ LinkedIn Positioning Panel is an instructions-only Claude plugin. It contains on
 - **When they are written.** When the environment supports file writing, a complete review writes three Markdown reports by default. The reports contain your profile content and the analysis.
 - **Where they go.** Reports go to a location you specify. Otherwise they go to a private location outside any git repository. If neither is possible, they are delivered in chat. The skill never stages, commits, or pushes reports.
 - **How long they are kept.** Retention depends on the host Claude application, not on this plugin. Files in cloud sessions or temporary locations may be removed. Download or copy reports you want to keep, and delete them when you no longer need them.
+- **Temporary processing files.** The host may create temporary files, such as extracted PDF text or page images, while reading the sources you supply. Chat-only delivery prevents report files, but does not guarantee that the host creates no temporary processing files. Their retention is controlled by the host.
 - **Avoiding files.** Ask for chat-only delivery ("show the reports only in chat") if you do not want report files written.
 
 ## Optional external lookups
 
-- **When they happen.** Unless you ask the skill to use only the supplied sources, it may check external claims when you ask for verification, or when it judges that accessible authoritative sources materially affect the review.
-- **What is sent.** Such lookups use only the web search or fetch tools provided by your Claude application. They send search terms, such as employer, award, or credential names, to those services, under their own terms.
-- **Preventing them.** Say "use only the supplied sources; do not browse."
+- **When they happen.** External lookups require your explicit request for web or external verification, a request to open a specific URL, or your approval of a clearly described lookup scope. A general review request, comparison of supplied sources, merely supplying a URL, or the skill judging research helpful is not authorization. This also applies to any reviewer or verifier agent.
+- **What is sent.** Such lookups use only the web search or fetch tools provided by your Claude application. They send only the minimum necessary search terms and requested URLs, such as employer, award, or credential names, to those services, under their own terms. The skill does not send whole profiles, reports, private contact details, or confidential content in lookups. If a lookup requires sensitive data, it must first explain the data and destination and obtain your specific authorization.
+- **Preventing them.** Without authorization, the review continues using supplied sources and lists optional checks. You may also say "use only the supplied sources; do not browse"; this instruction remains effective until you change it.
 - **Credentials.** The skill never asks for passwords, cookies, or session tokens, and does not bypass access controls.
 
 ## What the author receives
@@ -48,13 +49,13 @@ LinkedIn Positioning Panel is an instructions-only Claude plugin. It contains on
 
 [English](#privacy-notice--linkedin-positioning-panel) | 繁體中文
 
-生效日期：2026-11-13。適用於 plugin 版本 0.1.3，以及以 v0.1.2 發布的 Skill 指令。本說明的變更記錄在本儲存庫的歷史中。
+草稿更新日期：2026-11-26。適用於尚未發布的 plugin v0.1.3 送審候選版及其修正後的 Skill 指令，尚未於 main 生效。本說明的變更記錄在本儲存庫的歷史中。
 
 LinkedIn Positioning Panel 是只包含指令的 Claude plugin：內含一個 Skill（文字指令），沒有程式碼、hooks、腳本、MCP 伺服器或連接器。作者沒有為它營運任何服務。本 plugin 不隸屬於 LinkedIn，也未獲其背書。
 
 ## Plugin 讀取的內容
 
-- **只讀取你為所要求的審查而提供的資料。**Skill 只開啟你在對話中指定、附加或貼上的來源，例如 LinkedIn Profile PDF、貼上的個人檔案文字、截圖或職缺描述。除非你同意，不會開啟同一資料夾中的其他檔案。
+- **只讀取你為所要求的審查而提供的資料。**對於個人檔案與本機檔案，Skill 只開啟你在對話中指定、附加或貼上的來源，例如 LinkedIn Profile PDF、貼上的個人檔案文字、截圖或職缺描述。除非你同意，不會開啟同一資料夾中的其他檔案。明確授權的外部查詢範圍內，可以讀取搜尋結果及頁面，不需要逐筆指定。
 - **個人資料。**這些來源通常包含你的個人資料，例如姓名、工作經歷與成就，也可能包含他人的資訊，例如推薦文中的姓名。請只提供你有權分享、且需要審查的內容。
 - **主機提供的上下文。**Skill 不會指示 Claude 主動搜尋或擷取 Claude 的記憶、你的對話紀錄或對話摘要，也不會跨工作階段建立關於你的檔案。依你的設定，Claude 應用程式仍可能自行把這類上下文帶入對話；這類上下文由應用程式依你帳號的條款處理，不屬於本 plugin 的處理範圍。
 
@@ -68,13 +69,14 @@ LinkedIn Positioning Panel 是只包含指令的 Claude plugin：內含一個 Sk
 - **何時寫檔。**環境支援寫檔時，完整審查預設會寫出三份 Markdown 報告，內容包含你的個人檔案與分析。
 - **存放位置。**報告寫到你指定的位置；沒有指定時，寫到任何 git 儲存庫以外的私人位置；兩者都不可行時，改在對話中交付。Skill 一律不 stage、commit 或 push 報告。
 - **保存期限。**保存期限由主機 Claude 應用程式決定，而不是本 plugin。雲端工作階段或暫存位置中的檔案可能被清除。需要保留的報告請下載或複製，不再需要時請自行刪除。
+- **處理用暫存檔。**讀取你提供的來源時，主機可能建立擷取的 PDF 文字或頁面圖片等暫存檔。只在對話交付可避免報告檔案，但不保證主機完全不建立處理用暫存檔；其保存期限由主機決定。
 - **不要寫檔。**如果不希望寫出報告檔，請要求只在對話中呈現（「結果只在對話呈現」）。
 
 ## 可選的外部查詢
 
-- **何時查詢。**除非你要求只使用提供的來源，Skill 在你要求查證，或判斷可取得的權威來源會實質影響審查時，可能查核外部資訊。
-- **送出的內容。**查詢只透過你的 Claude 應用程式提供的網路搜尋或讀取工具進行，並會把雇主、獎項、證照名稱等搜尋字詞送到這些服務，依各服務自己的條款處理。
-- **避免查詢。**請說明「只使用提供的來源，不要上網」。
+- **何時查詢。**只有你明確要求網路或外部查證、要求開啟指定網址，或核准具體查詢範圍後才會進行。一般審查、對照提供的來源、單純貼上網址，或 Skill 判斷研究有幫助，都不構成授權。此規則也適用於審查及事實檢查代理。
+- **送出的內容。**查詢只透過你的 Claude 應用程式提供的網路搜尋或讀取工具進行，只會把雇主、獎項、證照名稱等必要的最少搜尋字詞與欲讀取的網址送到這些服務，依各服務自己的條款處理。不會在查詢中傳送完整個人檔案、報告、私人聯絡資料或機密內容。若查詢需要傳送敏感資料，須先說明資料與目的地並取得你的具體授權。
+- **避免查詢。**未授權時仍會完成來源範圍內的審查，並列出可選的待查事項。你也可以說明「只使用提供的來源，不要上網」；此指示持續有效，直到你更改。
 - **帳號憑證。**Skill 不會要求密碼、Cookie 或工作階段權杖，也不會繞過存取限制。
 
 ## 作者會收到什麼

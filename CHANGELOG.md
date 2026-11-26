@@ -19,9 +19,12 @@ Packaging for a possible listing in Anthropic's plugin directory. The two steps 
   - example prompts, listed separately for Claude Code and for claude.ai chat or Cowork (the latter untested);
   - data handling, covering Claude processing, report files, external lookups, LinkedIn URLs, and the absence of an author backend.
 
-### Unchanged
+### Changed on 2026-11-26 (submission preparation)
 
-- `skills/linkedin-positioning-panel/SKILL.md` is byte-identical to v0.1.2 (SHA-256 `59efb0a511e4a31df450b97cc537acfab997f378ba8aae51b05b99b981e3dcf2`).
+- Require explicit user authorization for external lookups, URL retrieval, and deeper research, also for agents. General audits and perceived usefulness are not authorization. Continue supplied-source review when external checks are unauthorized.
+- Minimize lookup terms and require specific authorization before sending sensitive data.
+- Align both READMEs and the draft privacy notice; disclose host temporary processing files.
+- The revised SKILL.md differs from v0.1.2. Earlier runtime tests below are historical and do not validate this changed candidate. Default report-file delivery remains unchanged; policy 1G and host-tool questions remain unresolved.
 
 ### Not decided
 
