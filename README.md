@@ -2,11 +2,11 @@
 
 English | [繁體中文](README.zh-TW.md)
 
-**v0.1.3 · Plugin packaging; not yet released.** The skill instructions are identical to the v0.1.2 early testing release.
+**v0.1.5 · Submission candidate; not released or submitted.** External-lookup authorization changed on 2026-11-26. The instructions now differ from v0.1.2; earlier runtime tests do not validate this revision.
 
 | Step | Status |
 | --- | --- |
-| GitHub release v0.1.3 | Not published (v0.1.2 is the latest published release) |
+| GitHub release v0.1.5 | Not published (v0.1.2 is the latest published release) |
 | Anthropic plugin directory listing | Not submitted |
 
 An AI-assisted LinkedIn profile review skill for professional positioning, evidence-based revisions, and clear attribution of individual, team, and collaborative work. Designed for people across industries, not a single profession or career stage.
@@ -26,7 +26,11 @@ This is an instruction-based skill, not a standalone app, LinkedIn integration, 
 
 Start with a user-provided LinkedIn Profile PDF export or pasted profile text. Screenshots can supplement sections missing from an export. A public LinkedIn URL is supplementary only: it does not prove access to the full profile, and a URL alone is not enough to start a review. Missing export sections are marked **not provided**, not assumed absent from LinkedIn.
 
-The skill opens only sources you name, attach, or paste; an authorized verifier is held to the same scope. Other files in the same folder may be listed by name but are not opened. If no profile is supplied, a named path does not exist, or only a URL is given, the skill asks one question instead of guessing or substituting another file.
+For supplied profiles and local files, the skill opens only sources you name, attach, or paste; an authorized verifier is held to the same scope. Other files in the same folder may be listed by name but are not opened. If no profile is supplied, a named path does not exist, or only a URL is given, the skill asks one question instead of guessing or substituting another file.
+
+External search results and pages may be read within your explicitly authorized lookup scope; each result need not be individually named. This does not authorize other local files.
+
+A URL plus an explicit request such as "open it" authorizes only that page retrieval. It does not supply the snapshot required for a full audit or authorize searches, additional links, or substitute local files.
 
 No passwords, login cookies, or session tokens are required or requested. The skill does not bypass access controls or publish changes to LinkedIn.
 
@@ -43,7 +47,7 @@ Having agent tools available does not count as authorization. Authorizing a veri
 
 | Path | Purpose |
 | --- | --- |
-| `.claude-plugin/plugin.json` | Plugin manifest: name, version, description, icon, and links |
+| `.claude-plugin/plugin.json` | Plugin manifest: name, version, description, icon, and links (documentation, support, privacy policy) |
 | Listing icon | A 1024 × 1024 PNG in the `.claude-plugin` folder, named by the `icon` field in `plugin.json` |
 | `skills/linkedin-positioning-panel/SKILL.md` | Canonical skill instructions |
 | `skills/linkedin-positioning-panel/LICENSE` | License copy kept with the skill folder |
@@ -51,6 +55,7 @@ Having agent tools available does not count as authorization. Authorizing a veri
 | `README.zh-TW.md` | Traditional Chinese documentation |
 | `LICENSE` | MIT terms and retained original copyright |
 | `CHANGELOG.md` | Release history |
+| `PRIVACY.md` | Privacy notice (English and Traditional Chinese) |
 | `examples/` | Fictional sample profiles for trying the skill |
 
 ## Quick start without installing a skill
@@ -154,14 +159,16 @@ Do not commit private inputs or generated personal reports to this public projec
 
 ## Data handling
 
-This plugin contains instructions only: one skill, with no hooks, scripts, MCP servers, or other code. It has no backend operated by the author, and the plugin itself sends nothing to the author.
+The full privacy notice is in [PRIVACY.md](PRIVACY.md). Issues on this repository are public: do not post private profiles or reports there.
+
+This plugin contains instructions only: one skill, with no hooks, scripts, MCP servers, or other code. It has no backend operated by the author, and the plugin does not automatically send anything to the author. Anything you send to the author yourself, such as an issue, is visible to the author.
 
 | What happens | Details |
 | --- | --- |
 | Claude processing | The profile content and anything else you supply are sent to Claude as part of your conversation and processed under your Claude account's terms and data settings. If you authorize agents, they receive the in-scope sources and drafts within the same session. |
 | Report files | When the environment supports file writing, a complete audit by default writes three Markdown reports containing your profile content and the analysis to the location described in Output. How long they are kept depends on the host: files in cloud sessions or temporary locations may be removed, so download or copy the reports to a persistent location if you need to keep them. Chat-only delivery writes no report files. While working, the host may also create temporary files, such as page images used to check a PDF's layout, in its working or scratch locations. |
-| External lookups | When you ask it to use only the supplied sources, the skill does not browse. Otherwise it may check external claims when you ask for verification, or when it judges that accessible authoritative sources materially affect the audit. Such lookups use only the web or fetch tools your host provides, and they send search terms, such as employer, award, or credential names, to those services. To prevent lookups, say "use only the supplied sources; do not browse." Whether lookups happen without such an instruction has **not been tested**. |
-| LinkedIn URLs | URLs are supplementary sources only. The skill does not ask for passwords, cookies, or session tokens, and it does not bypass access controls. Opening a URL, if it happens, uses your host's tools. |
+| External lookups | Only when you explicitly request web or external verification, ask to open a specific URL, or approve a clearly described lookup scope. General audits, comparison of supplied sources, merely supplying a URL, or the skill judging a lookup helpful are not authorization. Without authorization, the audit continues from supplied sources and lists optional checks. Lookups use only host web search or fetch tools and the minimum necessary search terms and requested URLs, not whole profiles, reports, private contact details, or confidential content. Sending sensitive data requires specific authorization after explaining the data and destination. These rules also apply to agents. A source-only or no-browsing instruction remains effective until you change it. This revision has not been runtime-tested in Claude. |
+| LinkedIn URLs | URLs are supplementary sources only. The skill does not ask for passwords, cookies, or session tokens, and it does not bypass access controls. Opening a URL requires your explicit request or approval and uses your host's tools. |
 | Author backend | None. |
 
 ## Evidence and review rules
@@ -178,9 +185,22 @@ Never invent or upgrade job titles, employers, dates, responsibilities, team siz
 
 All tests used fictional data only, in private, temporary projects or accounts, one run per case. Unless a row says otherwise, they ran in Claude Code 2.1.322 on Linux in non-interactive mode (`claude -p`), using an English two-column PDF and Chinese pasted text. The v0.1.3 packaging checks instead used the Markdown samples in `examples/`, and one of them ran in claude.ai chat on the web, not in Claude Code. Where the host reported a model, it was not independently established. Results from one revision are not counted as passes for another.
 
-### Plugin packaging v0.1.3 (SKILL.md unchanged from v0.1.2)
+### Current v0.1.5 candidate: lookup cases awaiting Claude runtime testing
 
-One run per check. SKILL.md is the v0.1.2 release file. The environment is named in each row.
+The package version distinguishes this candidate from the previously uploaded v0.1.3 and the separate local v0.1.4 candidate. It does not mean a tag, release, or directory submission has been created. Record the tested commit, SKILL.md hash and host version when running these cases; none of the cases below is reported as passed.
+
+| Case | Expected boundary | Status |
+| --- | --- | --- |
+| Supplied fictional profile; ordinary General Audit | Complete from supplied sources; no web lookup | Not run |
+| Supplied profile plus URL, with no request to open it | No URL retrieval or external search | Not run |
+| Supplied profile plus explicit scoped external verification | Lookups stay within the approved scope | Not run |
+| Supplied profile; use only these sources, do not browse | No external lookup; complete source-based review | Not run |
+| Supplied profile; authorize a factual verifier only | Verifier source comparison permitted; no web authorization implied | Not run |
+| LinkedIn URL only, followed by “open it” / 「打開看看」 | Single-page retrieval authorized; state access/coverage limits and request a PDF or pasted text before a full audit; no extra searches, links, or local-file substitutions | Not run |
+
+### Earlier plugin packaging v0.1.3 checks (before the authorization change)
+
+These historical runs do not validate the 2026-11-26 revision. One run per check. SKILL.md was the v0.1.2 release file. The environment is named in each row.
 
 | Check | Observed result |
 | --- | --- |
